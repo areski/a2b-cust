@@ -1,0 +1,20 @@
+{%  extends "base.html" %}
+{%  block title %}{{ title }}{% endblock %}
+{%  block head %}{{ head }}{% endblock %}
+{%  block content %}
+<table align=center>
+    <tr><td>LAST NAME :</td><td>{{ lastname }}</td><td>&nbsp;</td><td>ADDRESS :</td> <td>{{ address }}</td></tr>
+    <tr><td>FIRST NAME :</td><td>{{ firstname }}</td><td>&nbsp;</td><td>ZIP CODE :</td> <td>{{ zipcode }}</td></tr>
+    <tr><td>EMAIL :</td><td>{{ email_id }}</td><td>&nbsp;</td><td>CITY :</td> <td>{{ city }}</td></tr>
+    <tr><td>PHONE :</td><td>{{ phone }}</td><td>&nbsp;</td><td>STATE   :</td> <td>{{ state }}</td></tr>
+    <tr><td>FAX :</td><td>{{ fax }}</td><td>&nbsp;</td><td>COUNTRY :</td> <td>{{ country }}</td></tr>
+</table>
+<br/>
+<br/>
+<br/>
+<table align=center>
+    <tr><td>CARD NUMBER :<br/>{{ card_no }}</td><td>&nbsp;</td><td>BALANCE REMAINING :<br/>{{ credit }}</td> </tr>
+    <tr><td valign=top>CALLING PACKAGE :<br/>{{ pkg_label }}</td><td>&nbsp;</td><td>PACKAGE MINUTES<br/>REMAINING :<br/></td> </tr>
+</table>
+
+{% endblock %}

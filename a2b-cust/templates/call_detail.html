@@ -1,0 +1,76 @@
+{%  extends "base.html" %}
+{% load agent_extras %}
+
+{%  block title %}{{ title }}{% endblock %}
+{%  block head %}{{ head }}{% endblock %}
+{%  block content %}
+<table width=100% border=1>
+<tr><td align=center colspan=9>Number of Calls : {{ count }}</td></tr>
+{% if calls %}
+  <tr class="tr_class">
+        <td>&nbsp;</td>
+        <td>Date</td>
+        <td>CallerID</td>
+        <td>PhoneNumber</td>
+        <td>Destination</td>
+        <td>Duration</td>
+        <td>TC</td>
+        <td>CallType</td>
+        <td>Cost</td>
+  </tr>
+  {% for call in calls %}
+  <tr class="tr_class">
+      <td>{{ forloop.counter|row_counter:page }}</td>
+       <td>{{ call.starttime }}</td>
+       <td>{{ call.src }}</td>
+       <td>{{ call.calledstation }}</td>
+       <td>
+       {% ifnotequal call.destination 0 %}
+           {{ call.destination.destination }}
+       {% else %}
+       &nbsp;
+       {% endifnotequal %}
+       </td>
+       <td>{{ call.real_sessiontime|time_in_min }}</td>
+       <td>
+       {% for dialstatus in dial_status %}
+            {% ifequal  dialstatus.0 call.terminatecauseid %}
+                {{ dialstatus.1  }}
+            {% endifequal %}
+       {% endfor %}
+       </td>
+       <td>
+       {% ifnotequal call.sipiax null %}
+           {% for calltype in call_type %}
+            {% ifequal  calltype.0 call.sipiax %}
+                {{ calltype.1  }}
+            {% endifequal %}
+           {% endfor %}
+       {% else %}
+       &nbsp;
+       {% endifnotequal %}
+       </td>
+       <td>
+       {{ call.sessionbill|floatformat2 }} &nbsp; {{ base_currency.config_value|upper  }}
+       </td>
+   </tr>
+    {% endfor %}
+   <tr><td colspan=9>
+    {% if show_paginator %}
+    <div class="paginator">
+        {% if has_prev %}
+            <a href="?page={{ prev_page }}">&laquo; Previous</a>
+        {% endif %}
+        {% if has_next %}
+            <a href="?page={{ next_page }}">Next &raquo;</a>
+        {% endif %}
+        (Page {{ page }} of {{ pages }})
+    </div>
+    {% endif %}
+    </td></tr>
+{% else %}
+  <tr><td>No Records found.</td></tr>
+{% endif %}
+</table>
+
+{% endblock %}
