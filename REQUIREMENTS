@@ -1,5 +1,19 @@
 
 
+* CentOS 5.4 
+--------------
+
+	i386:
+		rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+		
+	x86_64:
+		rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm
+
+
+* Install Git 
+--------------
+	yum install git
+
 
 * django-debug-toolbar
 ------------------------
