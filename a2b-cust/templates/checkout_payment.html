@@ -1,0 +1,42 @@
+{%  extends "base.html" %}
+{%  block title %}{{ title }}{% endblock %}
+{%  block head %}{{ head }}{% endblock %}
+{%  block content %}
+<form method="POST" action="/checkout_confirmation/" enctype="multipart/form-data">
+<table width=100% align=center border=0 class=table_class>
+ <tr>
+  <td colspan=2>
+   {% if error %}
+      <p><i>{{ error }}</i></p>
+   {% endif %}
+  </td>
+ </tr>
+ <tr >
+  <td colspan=2>
+     Please Select Payment Method
+  </td>
+ </tr>
+ <tr >
+  <td align=center colspan=2>
+     {{ form.payment_method|removetags:"ul li"|safe }}
+  </td>
+ </tr>
+ <tr>
+  <td colspan=2>
+     Please enter the order amount:
+  </td>
+ </tr>
+ <tr>
+  <td align=center colspan=2>
+     {{ form.purchase_amount.label }}&nbsp;{{ form.purchase_amount }}&nbsp;{{ currency }}
+  </td>
+ </tr>
+ <tr>
+   <td>
+   <strong>Continue Checkout Procedure </strong> <br/>to confirm this order. </td>
+   <td ><input type=submit value="Continue"/>
+   </td>
+ </tr>
+</table>
+</form>
+{% endblock %}
