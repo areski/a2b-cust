@@ -1,0 +1,20 @@
+
+
+
+* django-debug-toolbar
+------------------------
+	git clone http://github.com/robhudson/django-debug-toolbar.git
+	cd django-debug-toolbar
+	
+	python setup.py bdist
+	sudo python setup.py install
+	sudo rm -rf build/ dist django_debug_toolbar.egg-info/
+
+
+* django-paypal
+----------------
+	cd into a2billing directory
+	git clone git://github.com/johnboxall/django-paypal.git paypal
+
+
+
