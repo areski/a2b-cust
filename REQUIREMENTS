@@ -2,7 +2,6 @@
 
 * CentOS 5.4 
 --------------
-
 	i386:
 		rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
 		
@@ -17,9 +16,10 @@
 
 * django-debug-toolbar
 ------------------------
-	first download :
+	download :
 	git clone http://github.com/robhudson/django-debug-toolbar.git
 	
+	install :
 	cd django-debug-toolbar
 	python setup.py bdist
 	sudo python setup.py install
