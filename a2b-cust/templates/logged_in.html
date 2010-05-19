@@ -16,5 +16,18 @@
     <tr><td>CARD NUMBER :<br/>{{ card_no }}</td><td>&nbsp;</td><td>BALANCE REMAINING :<br/>{{ credit }}</td> </tr>
     <tr><td valign=top>CALLING PACKAGE :<br/>{{ pkg_label }}</td><td>&nbsp;</td><td>PACKAGE MINUTES<br/>REMAINING :<br/></td> </tr>
 </table>
-
+<br/>
+<br/>
+<form action="checkout_payment/" id="check_out" method="POST">
+<table width=100% align=center>
+ <tr>
+    <td align=center>
+    Click below to buy credit : {{purchase_amount_str}}
+    </td>
+ </tr>
+ <tr>
+   <td align=center><input type="submit" value="BUY NOW"></td>
+ </tr>
+</table>
+</form>
 {% endblock %}

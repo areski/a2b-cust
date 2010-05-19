@@ -426,7 +426,7 @@ class Card(models.Model):
         db_table = u'cc_card'
 
     def __unicode__(self):
-        return u'%s' % (self.username)
+        return u'%s - %s' % (self.username, self.email)
 
 class CardArchive(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -1003,7 +1003,7 @@ class PaymentsStatus(models.Model):
     class Meta:
         db_table = u'cc_payments_status'
 
-class Paypal(models.Model):
+class paypal_ipn(models.Model):
     id = models.IntegerField(primary_key=True)
     payer_id = models.CharField(max_length=150, blank=True)
     payment_date = models.CharField(max_length=90, blank=True)

@@ -21,14 +21,6 @@ DATABASES = {
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     },
-    'default-areski': {
-        'ENGINE': 'mysql', # django.db.backends Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'django-a2b', # django_test Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'password',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
 }
 
 # Local time zone for this installation. Choices can be found here:
@@ -84,9 +76,19 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'pagination.middleware.PaginationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-ROOT_URLCONF = 'mysite2.urls'
+TEMPLATE_CONTEXT_PROCESSORS = (
+     "django.core.context_processors.auth",
+     "django.core.context_processors.debug",
+     "django.core.context_processors.i18n",
+     "django.core.context_processors.media",
+     "django.core.context_processors.request"
+)
+
+ROOT_URLCONF = 'a2b-cust.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -94,6 +96,12 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join( APPLICATION_DIR, 'templates' ),
 )
+
+INTERNAL_IPS = ('127.0.0.1', '83.56.228.139','203.123.165.131')
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -103,5 +111,16 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    'agents',    
+    'a2b-cust.agents',
+    'pagination',
+    'paypal.standard.ipn',
+    'debug_toolbar',
 )
+
+PAYPAL_RECEIVER_EMAIL = "yourpaypalemail@example.com"
+
+try :
+    from settings_local import *
+except :
+    pass
+
