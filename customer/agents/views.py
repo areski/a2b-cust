@@ -3,9 +3,9 @@ from django.http import  Http404, HttpResponseRedirect
 from django.template import * 
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout 
-from mysite2.forms import *
+from customer.forms import *
 from django.core.mail import send_mail
-from mysite2.models import *
+from customer.models import *
 from django.contrib.auth.models import User
 from django.contrib.sessions import *
 from datetime import *
