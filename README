@@ -1,7 +1,11 @@
 
 
- * A2Billing Customer interface based on Django
----------------------------------------------------
+ * A2Billing Customer Panel
+--------------------------------
 
+ - build with Django
+ - integrate Paypal IPN
+ - Testing
+ - ...	
 
 
