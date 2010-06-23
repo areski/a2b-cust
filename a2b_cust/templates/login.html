@@ -1,0 +1,16 @@
+
+<div  class="ui-widget ui-widget-content ui-corner-all" style=" margin-left: 300px; margin-right:350px; margin-top:10px;">
+     <form action="/login/" method="POST">
+         {% csrf_token %}
+         {% for field in form %}
+            <div class="fieldWrapper" style=" margin: 5px;">
+                {{ field.errors }}
+                {{ field.label_tag }} : {{ field }}
+            </div>
+        {% endfor %}
+         <input type="submit" value="Login" class="ui-state-default ui-corner-all" style="margin: 5px;">
+     </form>
+   </div>
+</div>
+
+

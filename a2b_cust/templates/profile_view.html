@@ -1,0 +1,42 @@
+{%  extends "base.html" %}
+{% load uni_form_tags %}
+
+{% block extra_header %}
+    {% include "visualize_header.html" %}
+{% endblock %}
+
+{%  block title %}Welcome to A2Billing Customer{% endblock %}
+
+{%  block content %}
+
+     <div class="span-24" style="margin-top:10px;">
+            {% if error %}
+                <div class="error" >
+                    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span>
+                    <strong>Alert : </strong>  {{ error }}
+                </div>
+            {% endif %}
+    </div>
+    
+    <div class="span-24" style="margin-top:20px;">
+
+    <form action="." method="POST">
+    {% csrf_token %}
+    
+    <table class="gradient-style">
+    <caption>Personal Information</caption>
+    {{ form.as_table }}
+    </table>
+
+    <p align="center">
+    <input type="submit" value="Update" />
+    </p>
+
+    </form>
+
+    </div>
+   
+
+{% endblock %}
+
+   

@@ -1,0 +1,45 @@
+{%  extends "base.html" %}
+
+{%  block title %}{{ title }}{% endblock %}
+
+{%  block head %}{{ head }}{% endblock %}
+
+{%  block content %}
+
+<div class="span-24" style="margin-top:20px;">
+
+
+<table class="gradient-style">
+ <caption>Please confirm your order</caption>
+   <tr>
+        <th scope="col">Payment Method:</th>
+        <td scope="row"> {{ payment_method|upper }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Amount: </th>
+        <td scope="row"> {{ amount }}&nbsp;{{currency}}</td>
+    </tr>
+    <tr>
+        <th scope="col">VAT({{vat}}):</th>
+        <td scope="row"> {{ vat_amount }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Total Amount Incl. VAT:</th>
+        <td scope="row"> {{ total_amt_incl_vat }}&nbsp;{{currency}}</td>
+    </tr>
+
+</table>
+            <form action="{{action_url}}" method="POST">
+            {% csrf_token %}
+            <div class="span-8" style="text-align:center;margin-left:90px;">
+               {{form.as_table}}
+              <strong>Please click button to confirm your order.</strong>
+           </div>
+           <div class="span-10" style="text-align:right;">
+              <input type=submit value="Confirm Order"/>
+           </div>
+            </form>
+
+</div>
+
+{% endblock %}

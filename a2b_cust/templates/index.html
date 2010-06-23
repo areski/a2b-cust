@@ -1,0 +1,34 @@
+{%  extends "base.html" %}
+
+{%  block title %}Welcome to A2Billing Customer{% endblock %}
+
+
+{% block login %}
+
+    <div class="container" >
+    <div class="span-14 prepend-4 append-6 last">
+            {% if error %}
+                <div class="error" >
+                    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span>
+                    <strong>Alert : </strong>  {{ error }}
+                </div>
+            {% endif %}
+    </div>
+    </div>
+    {% if not card.id %}
+        {% include "login.html" %}
+    {% endif %}
+
+{% endblock %}
+
+{%  block content %}
+
+   {% if card.id %}
+
+     {% include "logged_in.html" %}
+
+   {% endif %}
+
+{% endblock %}
+
+

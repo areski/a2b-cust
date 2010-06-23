@@ -1,0 +1,90 @@
+img {
+    border: 0;
+}
+
+#table_load_hour, #table_call_hour, #table_call_month  {
+	display: none;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+
+body {
+    font-size: 62.5%;
+    font-family: 'Segoe UI', Frutiger, Tahoma, Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    /*background: #ECECEC;
+    color: #666;*/
+}
+
+.logo_cdrstat{
+    margin:20px 0 0 0;
+}
+
+#footer {
+    top : 70px;
+    height: 50px;
+    position: relative;
+    text-align: center;
+    color : #555555;
+}
+
+.fg-button {
+   outline: 0;
+   margin:0 4px 0 0;
+   padding: .8em 1.5em;
+   text-decoration:none !important;
+   cursor:pointer;
+   position: relative;
+   text-align: center;
+   zoom: 1;
+}
+
+#accordeon-container{
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#graph-container{
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#export-container{
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #3079a9;
+    text-align: center;
+    border : 1px;
+}
+
+#cdr-container{
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-form{
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.info-icon{
+    margin-left: 40%;
+    border: 0;
+}
+
+a {color:#17598A;}
+
+a:focus, a:hover {color:#2779AA;}
+
+body, .ui-widget-header  {
+    color:#17598A;
+}
+
+.visualize {
+    margin:10px 0 0 30px;
+}

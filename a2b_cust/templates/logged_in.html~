@@ -1,0 +1,12 @@
+<h1>Welcome, {{ lastname }}</h1>
+<p>
+<div id="nav">
+  
+  {% if lastname  %}
+   <a href="/">home</a> | <a href="/profile/card_id={{ card_id }}">Profile</a> | <a href="/cdr">Call Record</a> |    {{ lastname }} (<a href="/logout">logout</a>)
+ {% else %}
+    <a href="/login/">login</a>
+ {% endif %}
+</div>
+<!--<a href='/logout/'>Logout</a>--></p>
+

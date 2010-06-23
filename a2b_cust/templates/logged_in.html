@@ -1,0 +1,59 @@
+
+<table class="gradient-style" >
+    <caption>Customer Detail</caption>
+    <tr>
+        <th scope="col">LAST NAME :</th>
+        <td scope="row">{{ card.lastname }}</td>
+        <th scope="col">ADDRESS :</th>
+        <td scope="row">{{ card.address }}</td>
+    </tr>
+    <tr>
+        <th scope="col">FIRST NAME :</th>
+        <td scope="row">{{ card.firstname }}</td>
+        <th scope="col">ZIP CODE :</th>
+        <td scope="row">{{ card.zipcode }}</td>
+    </tr>
+    <tr>
+        <th scope="col">EMAIL :</th>
+        <td scope="row">{{ card.email }}</td>
+        <th scope="col">CITY :</th>
+        <td scope="row">{{ card.city }}</td>
+    </tr>
+    <tr>
+        <th scope="col">PHONE :</th>
+        <td scope="row">{{ card.phone }}</td>
+        <th scope="col">STATE   :</th>
+        <td scope="row">{{ card.state }}</td>
+    </tr>
+    <tr>
+        <th scope="col">FAX :</th>
+        <td scope="row">{{ card.fax }}</td>
+        <th scope="col">COUNTRY :</th>
+        <td scope="row">{{ card.country }}</td>
+    </tr>
+</table>
+<table class="gradient-style" >
+    <tr>
+        <th scope="col">CARD NUMBER :</th>
+        <td scope="row">{{ card.username }}</td>
+        <th scope="col">BALANCE REMAINING :</th>
+        <td scope="row">{{ card.credit }} {{card.currency}}</td>
+    </tr>
+    <tr>
+        <th scope="col">CALLING PACKAGE :</th>
+        <td scope="row">{{ pkg_label }}</td>
+        <th scope="col">PACKAGE MINUTES REMAINING :</th>
+        <td scope="row">{{ pkg_label }}</td>
+       
+    </tr>
+</table>
+
+ <div class="ui-widget ui-widget-content ui-corner-all" style="margin: 10px 10px 10px 300px; padding: 10px 0px 30px 0px; width: 400px; height: 30px;">
+    <form action="checkout_payment/" id="check_out" method="POST">
+        {% csrf_token %}
+        <div class="fieldWrapper" style="text-align : center; margin: 5px;">
+        Buy credit : {{ purchase_amount_str }}
+        <br/><input type="submit" value="BUY NOW" >
+        </div>
+    </form>
+</div>

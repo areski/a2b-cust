@@ -1,0 +1,40 @@
+
+{%  extends "base.html" %}
+{%  block title %}Welcome to A2Billing Customer{% endblock %}
+{%  block head %}Welcome to A2Billing Customer{% endblock %}
+{%  block content %}
+   {% if card.username %}
+     <p>Welcome {{ card.username }}!
+       Here you can do A2Billing Work!</p>
+   {% else %}
+     <p>Welcome anonymous user!
+       You need to <a href="/login/">login</a>
+       before you can view A2Billing.</p>
+   {% endif %}
+{% endblock %}
+
+<!--<html>
+  <head>
+    <title>{{ head_title }}</title>
+  </head>
+  <body>
+    <h1>{{ page_title }}</h1>
+    <p>{{ page_body }}</p>
+  </body>
+</html>-->
+<!--<html>
+  <head>
+    <title>A2Billing Customer</title>
+  </head>
+  <body>
+    <h1>Welcome to A2Billing Customer</h1>
+    {% if user.username %}
+       <p>Welcome {{ user.username }}!
+         Here you can store and share bookmarks!</p>
+    {% else %}
+       <p>Welcome anonymous user!
+       You need to <a href="/login/">login</a>
+       before you can store and share bookmarks.</p>
+    {% endif %}
+  </body>
+</html>-->

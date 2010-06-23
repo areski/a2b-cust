@@ -1,0 +1,59 @@
+{%  extends "base.html" %}
+
+{%  block title %}{{ title }}{% endblock %}
+
+{%  block head %}{{ head }}{% endblock %}
+
+{%  block content %}
+
+
+    <div class="span-24" style="margin-top:10px;">
+        {% if error %}
+            <div class="error" >
+                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span>
+                <strong>Alert : </strong>  {{ error }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="span-24" style="margin-top:20px;">
+
+        <form method="POST" action="/checkout_confirmation/" enctype="multipart/form-data">
+        {% csrf_token %}
+
+            <table class="gradient-style">
+                 <tr >
+                  <th scope="col">
+                     Please Select Payment Method
+                  </th>
+                 </tr>
+                 <tr >
+                  <td scope="row">
+                     {{ form.payment_method|removetags:"ul li"|safe }}
+                  </td>
+                 </tr>
+                 <tr>
+                  <th scope="col">
+                     Please enter the order amount:
+                  </th>
+                 </tr>
+                 <tr>
+                  <td scope="row">
+                     {{ form.purchase_amount.label }}&nbsp;{{ form.purchase_amount }}&nbsp;{{ currency }}
+                  </td>
+                 </tr>
+            </table>
+
+
+           <div class="span-8" style="text-align:center;margin-left:90px;">
+              <strong>Continue Checkout Procedure </strong> to confirm this order.
+           </div>
+           <div class="span-10" style="text-align:right;">
+              <input type=submit value="Continue"/>
+           </div>
+
+        </form>
+
+    </div>
+{% endblock %}
+
