@@ -1,6 +1,17 @@
 img {
     border: 0;
 }
+ .a2b_cust_table{
+    
+    margin-left:200px;
+    width:65%;
+}
+.a2b_cust_table td {
+	padding:0px 0px 0px 0px;
+    border-bottom: 1px solid #CCC;
+	padding: 0 0em;
+}
+
 
 #table_load_hour, #table_call_hour, #table_call_month  {
 	display: none;

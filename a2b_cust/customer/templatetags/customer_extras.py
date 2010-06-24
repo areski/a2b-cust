@@ -61,8 +61,8 @@ def adjust_for_pagination(value, page):
 def time_in_min(value,arg):
     if arg == 'min':
         min = int(value / 60)
-        sec = int(value % 60)
-        return str(str(min) + ":" + str(sec))
+        sec = int(value % 60)        
+        return "%02d" % min + ":" + "%02d" % sec 
     else:
         min = int(value / 60)
         min = (min * 60)

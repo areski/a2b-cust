@@ -161,8 +161,7 @@ def call_detail(request):
             calls = Call.objects.select_related('prefix__destination', 'destination').filter(**kwargs).order_by('-starttime')
             tariffgrp = Tariffgroup.objects.all()
             count = calls.count()
-            variables = RequestContext(request,
-                        {'form': form,
+            variables = {'form': form,
                          'card':card,
                          'calls':calls,
                          'count':count,
@@ -174,8 +173,8 @@ def call_detail(request):
                          'result':result,
                          'page':page,
                          'title':'A2Billing | Call History',                        
-                        })
-            return render_to_response('call_detail.html', variables,context_instance = RequestContext(request))
+                        }
+            return render_to_response('call_detail.html', variables, context_instance = RequestContext(request))
     else:
         logout(request)
         return HttpResponseRedirect('/')

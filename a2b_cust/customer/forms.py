@@ -24,18 +24,19 @@ class CardForm(ModelForm):
         fields = ['lastname', 'firstname', 'address','city','state','country','zipcode','id_timezone','phone','fax']
         
 class SearchForm(forms.Form):
-    fromday_chk = forms.BooleanField(label=u"DATE",required=False)
-    from_day = forms.ChoiceField(label=u'From',choices=day_range())
-    from_month_year= forms.ChoiceField(label=u'',choices=month_year_range())
-    today_chk = forms.BooleanField(label="",required=True)
-    to_day = forms.ChoiceField(label=u'To',choices=day_range())
-    to_month_year = forms.ChoiceField(label=u'',choices=month_year_range())
-    phone_no = forms.CharField(label=u'PHONENUMBER',widget=forms.TextInput(attrs={'size': 15}))
-    phone_no_type = forms.TypedChoiceField(coerce=bool,choices=((1, 'Exact'), (2, 'Begins with'), (3, 'Contains'), (4, 'Ends with')),widget=forms.RadioSelect)    
-    call_type = forms.ChoiceField(label=u'CALL TYPE',choices=call_type_list())
-    show = forms.TypedChoiceField(label=u'Show:',coerce=bool,choices=(('ANSWER', 'Answered Calls'), ('ALL', 'All Calls')),widget=forms.RadioSelect)
-    result = forms.TypedChoiceField(label=u'Result:',coerce=bool,choices=(('min', 'Minutes'), ('sec', 'Seconds')),widget=forms.RadioSelect)
-    currency  = forms.ChoiceField(label=u'Currecny:',choices=currency_list())
+    fromday_chk = forms.BooleanField(label=u'FROM :',required=False,)
+    from_day = forms.ChoiceField(label=u'',choices=day_range(),required=False,)
+    from_month_year= forms.ChoiceField(label=u'',choices=month_year_range(),required=False,)
+    today_chk = forms.BooleanField(label='TO :',required=False,)
+    to_day = forms.ChoiceField(label=u'',choices=day_range(),required=False,)
+    to_month_year = forms.ChoiceField(label=u'',choices=month_year_range(),required=False,)
+    phone_no = forms.CharField(label=u'PHONE NO :',widget=forms.TextInput(attrs={'size': 15}),required=False,)
+    phone_no_type = forms.TypedChoiceField(coerce=bool,choices=((1, 'Exact'), (2, 'Begins with'), (3, 'Contains'), (4, 'Ends with')),widget=forms.RadioSelect,required=False,label=u'PHONE NO TYPE :',)
+    call_type = forms.ChoiceField(label=u'CALL TYPE :',choices=call_type_list(),required=False,)
+    show = forms.TypedChoiceField(label=u'SHOW :',coerce=bool,choices=(('ANSWER', 'Answered Calls'), ('ALL', 'All Calls')),widget=forms.RadioSelect,required=False,)
+    result = forms.TypedChoiceField(label=u'RESULT :',coerce=bool,choices=(('min', 'Minutes'), ('sec', 'Seconds')),widget=forms.RadioSelect,required=False,)
+    currency  = forms.ChoiceField(label=u'CURRENCY :',choices=currency_list(),required=False,)
+    
 
 class CheckoutPaymentForm(forms.Form):
     payment_method = forms.TypedChoiceField(coerce=bool,choices=(('paypal', 'PayPal'), ),widget=forms.RadioSelect)#('moneybookers', 'Moneybookers.com'), ('plugnpay', 'PlugnPay')
