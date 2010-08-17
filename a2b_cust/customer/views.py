@@ -1,10 +1,10 @@
 # Create your views here.
 from django.http import  Http404, HttpResponseRedirect #,HttpRequest,HttpResponse,
 from django.template import * 
-#from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth import logout #authenticate, login ,
+from django.views.decorators.csrf import csrf_protect
 from a2b_cust.customer.forms import *
 from a2b_cust.customer.models import *
 from django.contrib.sessions import *
@@ -12,6 +12,9 @@ from datetime import *
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.ipn.signals import payment_was_successful
 from uni_form.helpers import FormHelper, Submit, Reset
+from grid import ExampleGrid
+from a2b_cust.helpers import json_encode
+#from django.template.loader import get_template
 #import sys, string, random
 #import operator
 #from django.db import connection
@@ -69,6 +72,18 @@ def profile_view(request):
         logout(request)
         return HttpResponseRedirect('/')
 
+
+# Create your views here.
+def grid_handler(request):
+    # handles pagination, sorting and searching
+    grid = ExampleGrid()
+    print "grid.queryset";
+    return HttpResponse(grid.get_json(request), mimetype="application/json")
+
+def grid_config(request):
+    # build a config suitable to pass to jqgrid constructor
+    grid = ExampleGrid()
+    return HttpResponse(grid.get_config(), mimetype="application/json")
  
 def call_detail(request):
     kwargs = {}

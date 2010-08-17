@@ -35,7 +35,9 @@ from django.utils import simplejson as json
 from django.utils.encoding import smart_str
 from django.http import Http404
 #from util.json import json_encode
-from cdr_stats.helpers import json_encode
+from a2b_cust.helpers import json_encode
+from customer.models import Call
+from django.core.urlresolvers import reverse
 
 
 class JqGrid(object):
