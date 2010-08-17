@@ -6,7 +6,7 @@ class AgentAdmin(admin.ModelAdmin):
     search_fields = ('id', 'login')
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'useralias','lastname','credit','tariff','id_didgroup','status','language')
+    list_display = ('id', 'username', 'useralias','lastname','id_didgroup','credit','currency','tariff','status','language')    
     #fields = ('id', 'username', 'useralias','lastname','id_didgroup','status')
     search_fields = ('useralias', 'username')
     ordering = ('id',)

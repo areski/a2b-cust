@@ -8,6 +8,7 @@
 # into your database.
 
 from django.db import models #, connection, transaction
+#from a2b_cust.customer.function_def import *
 #from django.forms import ModelForm
 
 
@@ -368,7 +369,49 @@ class CcCampaignconfCardgroup(models.Model):
     class Meta:
         db_table = u'cc_campaignconf_cardgroup'
 
+class Tariffgroup(models.Model):
+    id = models.IntegerField(primary_key=True)
+    iduser = models.IntegerField()
+    idtariffplan = models.IntegerField()
+    tariffgroupname = models.CharField(max_length=150)
+    lcrtype = models.IntegerField()
+    creationdate = models.DateTimeField()
+    removeinterprefix = models.IntegerField()
+    id_cc_package_offer = models.IntegerField()
+
+    def __unicode__(self):
+        return u"%s" % (self.tariffgroupname)
+    
+    class Meta:
+        db_table = u'cc_tariffgroup'
+
+    
+
+
+class Cardgroup(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=150, blank=True)
+    description = models.TextField(blank=True)
+    users_perms = models.IntegerField()
+    id_agent = models.IntegerField(null=True, blank=True)
+    provisioning = models.CharField(max_length=600, blank=True)
+
+    def __unicode__(self):
+        return u"%s" % (self.name)
+
+    class Meta:
+        db_table = u'cc_card_group'
+        
 class Card(models.Model):
+    card_status_list = ((0,"CANCELLED"),
+                        (1,"ACTIVATED"),
+                        (2,"NEW"),
+                        (3,"WAITING-MAILCONFIRMATION"),
+                        (4,"RESERVED"),
+                        (5,"EXPIRED"),
+                        (6,"SUSPENDED FOR UNDERPAYMENT"),
+                        (7,"SUSPENDED FOR LITIGATION"),
+                        (8,"WAITING-SUBSCRIPTION-PAYMENT"))
     id = models.IntegerField(primary_key=True, verbose_name='ID')
     creationdate = models.DateTimeField()
     firstusedate = models.DateTimeField()
@@ -379,10 +422,8 @@ class Card(models.Model):
     useralias = models.CharField(unique=True, max_length=150, verbose_name='LOGIN')
     uipass = models.CharField(max_length=150)
     credit = models.DecimalField(max_digits=17, decimal_places=5, verbose_name='BA')
-    tariff = models.IntegerField(null=True, blank=True, verbose_name='PLAN')
-    id_didgroup = models.IntegerField(null=True, blank=True, verbose_name='GROUP')
     activated = models.CharField(max_length=3)
-    status = models.IntegerField( verbose_name='STATUS')
+    status = models.IntegerField(choices=card_status_list, verbose_name='STATUS')#card_status_acronym_list(),
     lastname = models.CharField(max_length=150, verbose_name='LASTNAME')
     firstname = models.CharField(max_length=150, verbose_name='FIRSTNAME')
     address = models.CharField(max_length=300)
@@ -434,13 +475,32 @@ class Card(models.Model):
     restriction = models.IntegerField()
     id_seria = models.IntegerField(null=True, blank=True)
     serial = models.IntegerField(null=True, blank=True)
-    class Meta:
-        db_table = u'cc_card'
+    tariff = models.ForeignKey(Tariffgroup, db_column ="tariff", null=True, blank=True, verbose_name='PLAN')
+    id_didgroup = models.ForeignKey(Cardgroup, db_column ="id_didgroup", null=True,blank=True, verbose_name='GROUP')
+
+    def card_group_name(self):
+        """
+        Get the full card group name
+        """
+        if self.id_didgroup is None:
+            return ""
+        else:
+            return self.id_didgroup.name
+
+    def tariff_name(self):
+        """
+        Get the full tariff name
+        """
+        if self.tariff is None:
+            return ""
+        else:
+            return self.tariff.tariffgroupname
 
     def __unicode__(self):
-        return u'%s' % (self.username)
+        return u"%.3f %s" % (self.credit, self.currency)
 
-
+    class Meta:
+        db_table = u'cc_card'
 
 
 
@@ -512,15 +572,7 @@ class CardArchive(models.Model):
     class Meta:
         db_table = u'cc_card_archive'
 
-class CardGroup(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=150, blank=True)
-    description = models.TextField(blank=True)
-    users_perms = models.IntegerField()
-    id_agent = models.IntegerField(null=True, blank=True)
-    provisioning = models.CharField(max_length=600, blank=True)
-    class Meta:
-        db_table = u'cc_card_group'
+
 
 class CardHistory(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -1396,17 +1448,6 @@ class CcSystemLog(models.Model):
     class Meta:
         db_table = u'cc_system_log'
 
-class Tariffgroup(models.Model):
-    id = models.IntegerField(primary_key=True)
-    iduser = models.IntegerField()
-    idtariffplan = models.IntegerField()
-    tariffgroupname = models.CharField(max_length=150)
-    lcrtype = models.IntegerField()
-    creationdate = models.DateTimeField()
-    removeinterprefix = models.IntegerField()
-    id_cc_package_offer = models.IntegerField()
-    class Meta:
-        db_table = u'cc_tariffgroup'
 
 class CcTariffgroupPlan(models.Model):
     idtariffgroup = models.IntegerField(primary_key=True)
