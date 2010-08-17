@@ -1,12 +1,12 @@
 from django.contrib import admin
-from a2b_cust.customer.models import Agent, Card #Publisher, Author, Book
+from a2b_cust.customer.models import * #Publisher, Author, Book
 
 class AgentAdmin(admin.ModelAdmin):
     list_display = ('id', 'datecreation', 'login','passwd','firstname','lastname','credit','commission','currency','active')
     search_fields = ('id', 'login')
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'useralias','lastname','id_didgroup','credit','currency','tariff','status','language')    
+    list_display = ('id', 'username', 'useralias','lastname','id_didgroup','BA','tariff','status','language')
     #fields = ('id', 'username', 'useralias','lastname','id_didgroup','status')
     search_fields = ('useralias', 'username')
     ordering = ('id',)

@@ -8,7 +8,6 @@
 # into your database.
 
 from django.db import models #, connection, transaction
-#from a2b_cust.customer.function_def import *
 #from django.forms import ModelForm
 
 
@@ -386,8 +385,6 @@ class Tariffgroup(models.Model):
         db_table = u'cc_tariffgroup'
 
     
-
-
 class Cardgroup(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=150, blank=True)
@@ -401,6 +398,7 @@ class Cardgroup(models.Model):
 
     class Meta:
         db_table = u'cc_card_group'
+
         
 class Card(models.Model):
     card_status_list = ((0,"CANCELLED"),
@@ -496,7 +494,7 @@ class Card(models.Model):
         else:
             return self.tariff.tariffgroupname
 
-    def __unicode__(self):
+    def BA(self):
         return u"%.3f %s" % (self.credit, self.currency)
 
     class Meta:
