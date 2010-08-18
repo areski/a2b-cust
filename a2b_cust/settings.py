@@ -96,6 +96,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 INSTALLED_APPS = (
     'django.contrib.admin',
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -108,3 +109,4 @@ INSTALLED_APPS = (
 )
 
 PAYPAL_RECEIVER_EMAIL = "yourpaypalemail@example.com"
+

@@ -299,8 +299,8 @@ def check_login(request):
                 password=request.POST['password']
 
                 card = Card.objects.get(useralias=username)
-                tariff = Tariffgroup.objects.get(id=card.tariff)
-                packageoff = PackageOffer.objects.get(id=tariff.id_cc_package_offer)
+                #tariff = Tariffgroup.objects.get(id=card.tariff)
+                #packageoff = PackageOffer.objects.get(id=tariff.id_cc_package_offer)
 
                 if card.uipass == password and card.status == 1:
                     request.session['card_id'] = card.id
@@ -308,7 +308,7 @@ def check_login(request):
                     variables = RequestContext(request,
                     {'card_id':card.id,
                      'card':card,                     
-                     'pkg_label':packageoff.label,
+                     #'pkg_label':packageoff.label,
                      'purchase_amount_str':purchase_amount_str(),
                      'title':'A2Billing | Home',                     
                      'content':''

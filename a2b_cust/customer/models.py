@@ -10,7 +10,57 @@
 from django.db import models #, connection, transaction
 #from django.forms import ModelForm
 
+paid_type_list   = ((0,'PREPAID CARD'),
+                    (1,'POSTPAID CARD'))
 
+LANGUAGES = ( ('en', 'English'),
+              ('fr', 'French'),
+              ('es', 'Spanish'),
+              ('br', 'Brazilian'))
+
+card_status_list = ((0,"CANCELLED"),
+                    (1,"ACTIVATED"),
+                    (2,"NEW"),
+                    (3,"WAITING-MAILCONFIRMATION"),
+                    (4,"RESERVED"),
+                    (5,"EXPIRED"),
+                    (6,"SUSPENDED FOR UNDERPAYMENT"),
+                    (7,"SUSPENDED FOR LITIGATION"),
+                    (8,"WAITING-SUBSCRIPTION-PAYMENT"))
+                    
+simultaccess_list = ((1,"SIMULTANEOUS ACCESS"),
+                     (0,"INDIVIDUAL ACCESS"))
+
+generic_yes_no_list = ((0,'No'),(1,'Yes'))
+
+enableexpire_list = ((0,'NO EXPIRY'),
+                     (1,'EXPIRE DATE'),
+                     (2,'EXPIRE DAYS SINCE FIRST USE'),
+                     (3,'EXPIRE DAYS SINCE CREATION'))
+
+discount_list = []
+discount_list.append( ('0.00','NO DISCOUNT') )
+for n in range(1,100):
+   discount_list.append( (str(n)+".00",str(n)+"%"))
+    
+restriction_list = ((0,"NONE RESTRICTION USED"),
+                    (1,"CAN'T CALL RESTRICTED NUMBERS"),
+                    (2,"CAN ONLY CALL RESTRICTED NUMBERS"))
+
+
+class Country(models.Model):
+    id = models.IntegerField(primary_key=True)
+    countrycode = models.CharField(max_length=240)
+    countryprefix = models.CharField(max_length=240)
+    countryname = models.CharField(max_length=240)
+    
+    class Meta:
+        db_table = u'cc_country'
+
+def country_list():
+        list = Country.objects.all()
+        return ((l.countrycode, l.countryname) for l in list)
+    
 class AuthGroup(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(unique=True, max_length=240)
@@ -335,6 +385,10 @@ class Campaign(models.Model):
     sunday = models.IntegerField()
     id_cid_group = models.IntegerField()
     id_campaign_config = models.IntegerField()
+
+    def __unicode__(self):
+        return u"%s" % (self.name)
+
     class Meta:
         db_table = u'cc_campaign'
 
@@ -384,7 +438,6 @@ class Tariffgroup(models.Model):
     class Meta:
         db_table = u'cc_tariffgroup'
 
-    
 class Cardgroup(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=150, blank=True)
@@ -399,82 +452,122 @@ class Cardgroup(models.Model):
     class Meta:
         db_table = u'cc_card_group'
 
+class Cardseria(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=90)
+    description = models.TextField(blank=True)
+    value = models.IntegerField()
+
+    def __unicode__(self):
+        return u"%s" % (self.name)
+    
+    class Meta:
+        db_table = u'cc_card_seria'
+
+class Currencies(models.Model):
+    id = models.IntegerField(primary_key=True)
+    currency = models.CharField(unique=True, max_length=9)
+    name = models.CharField(max_length=90)
+    value = models.DecimalField(max_digits=13, decimal_places=5)
+    lastupdate = models.DateTimeField()
+    basecurrency = models.CharField(max_length=9)
+
+    def __unicode__(self):
+        return u"%s (%.3f)" % (self.name,self.value)
+
+    class Meta:
+        db_table = u'cc_currencies'
         
-class Card(models.Model):
-    card_status_list = ((0,"CANCELLED"),
-                        (1,"ACTIVATED"),
-                        (2,"NEW"),
-                        (3,"WAITING-MAILCONFIRMATION"),
-                        (4,"RESERVED"),
-                        (5,"EXPIRED"),
-                        (6,"SUSPENDED FOR UNDERPAYMENT"),
-                        (7,"SUSPENDED FOR LITIGATION"),
-                        (8,"WAITING-SUBSCRIPTION-PAYMENT"))
+class Didgroup(models.Model):
+    id = models.IntegerField(primary_key=True)
+    didgroupname = models.CharField(max_length=150)
+    creationdate = models.DateTimeField()
+
+    def __unicode__(self):
+        return u"%s" % (self.didgroupname)
+
+    class Meta:
+        db_table = u'cc_didgroup'
+
+class Timezone(models.Model):
+    id = models.IntegerField(primary_key=True)
+    gmtzone = models.CharField(max_length=765, blank=True)
+    gmttime = models.CharField(max_length=765, blank=True)
+    gmtoffset = models.IntegerField()
+
+    def __unicode__(self):
+        return u"%s" % (self.gmtzone)
+
+    class Meta:
+        db_table = u'cc_timezone'
+
+class Card(models.Model):    
     id = models.IntegerField(primary_key=True, verbose_name='ID')
     creationdate = models.DateTimeField()
-    firstusedate = models.DateTimeField()
+    firstusedate = models.DateTimeField(null=True, blank=True)
     expirationdate = models.DateTimeField()
-    enableexpire = models.IntegerField(null=True, blank=True)
+    enableexpire = models.IntegerField(null=True, blank=True,choices=enableexpire_list, verbose_name='Enable expire')
     expiredays = models.IntegerField(null=True, blank=True)
     username = models.CharField(max_length=150, verbose_name='ACCOUNT NUMBER')
     useralias = models.CharField(unique=True, max_length=150, verbose_name='LOGIN')
     uipass = models.CharField(max_length=150)
     credit = models.DecimalField(max_digits=17, decimal_places=5, verbose_name='BA')
     activated = models.CharField(max_length=3)
-    status = models.IntegerField(choices=card_status_list, verbose_name='STATUS')#card_status_acronym_list(),
+    status = models.IntegerField(choices=card_status_list, verbose_name='STATUS')
     lastname = models.CharField(max_length=150, verbose_name='LASTNAME')
     firstname = models.CharField(max_length=150, verbose_name='FIRSTNAME')
     address = models.CharField(max_length=300)
     city = models.CharField(max_length=120)
     state = models.CharField(max_length=120)
-    country = models.CharField(max_length=120)
-    zipcode = models.CharField(max_length=60)
+    country = models.CharField(max_length=120,choices=country_list())
+    zipcode = models.CharField(max_length=60,null=True, blank=True,)
     phone = models.CharField(max_length=60)
     email = models.CharField(max_length=210)
-    fax = models.CharField(max_length=60)
+    fax = models.CharField(max_length=60,null=True, blank=True)
     inuse = models.IntegerField(null=True, blank=True)
-    simultaccess = models.IntegerField(null=True, blank=True)
-    currency = models.CharField(max_length=9, blank=True)
+    simultaccess = models.IntegerField(choices=simultaccess_list,null=True, blank=True ,verbose_name='SIMULTANEOUS ACCESS ')
     lastuse = models.DateTimeField()
     nbused = models.IntegerField(null=True, blank=True)
-    typepaid = models.IntegerField(null=True, blank=True)
+    typepaid = models.IntegerField(null=True, blank=True,choices=paid_type_list , verbose_name='Payment Type')
     creditlimit = models.IntegerField(null=True, blank=True)
     voipcall = models.IntegerField(null=True, blank=True)
-    sip_buddy = models.IntegerField(null=True, blank=True)
-    iax_buddy = models.IntegerField(null=True, blank=True)
-    language = models.CharField(max_length=15, blank=True, verbose_name='LG')
+    sip_buddy = models.IntegerField(null=True, blank=True,choices=generic_yes_no_list, verbose_name='Create SIP config')
+    iax_buddy = models.IntegerField(null=True, blank=True,choices=generic_yes_no_list, verbose_name='Create IAX config')
     redial = models.CharField(max_length=150)
-    runservice = models.IntegerField(null=True, blank=True)
-    nbservice = models.IntegerField(null=True, blank=True)
-    id_campaign = models.IntegerField(null=True, blank=True)
+    runservice = models.BooleanField(choices=generic_yes_no_list)
+    nbservice = models.IntegerField(null=True, blank=True)    
     num_trials_done = models.IntegerField(null=True, blank=True)
     vat = models.FloatField()
     servicelastrun = models.DateTimeField()
     initialbalance = models.DecimalField(max_digits=17, decimal_places=5)
     invoiceday = models.IntegerField(null=True, blank=True)
-    autorefill = models.IntegerField(null=True, blank=True)
+    autorefill = models.IntegerField(null=True, blank=True,choices=generic_yes_no_list)
     loginkey = models.CharField(max_length=120)
-    mac_addr = models.CharField(max_length=51)
-    id_timezone = models.IntegerField(null=True, blank=True)
+    mac_addr = models.CharField(max_length=51)    
     tag = models.CharField(max_length=150)
     voicemail_permitted = models.IntegerField()
     voicemail_activated = models.IntegerField()
     last_notification = models.DateTimeField(null=True, blank=True)
     email_notification = models.CharField(max_length=210)
-    notify_email = models.IntegerField()
-    credit_notification = models.IntegerField()
-    id_group = models.IntegerField()
-    company_name = models.CharField(max_length=150)
-    company_website = models.CharField(max_length=180)
-    vat_rn = models.CharField(max_length=120, blank=True)
+    notify_email = models.BooleanField(choices=generic_yes_no_list, verbose_name='PERMITTED NOTIFICATIONS BY MAIL')
+    credit_notification = models.IntegerField()    
+    company_name = models.CharField(max_length=150,null=True, blank=True,)
+    company_website = models.CharField(max_length=180,null=True, blank=True,)
+    vat_rn = models.CharField(max_length=120, blank=True,verbose_name='VAT Registration Number')
     traffic = models.IntegerField(null=True, blank=True)
-    traffic_target = models.CharField(max_length=900)
-    discount = models.DecimalField(max_digits=7, decimal_places=2)
-    restriction = models.IntegerField()
+    traffic_target = models.CharField(max_length=900,null=True, blank=True,)
+    discount = models.DecimalField(max_digits=7, decimal_places=2,choices=discount_list)
+    restriction = models.IntegerField(choices=restriction_list)
     id_seria = models.IntegerField(null=True, blank=True)
-    serial = models.IntegerField(null=True, blank=True)
+    serial = models.ForeignKey(Cardseria,db_column ="serial", null=True, blank=True)
     tariff = models.ForeignKey(Tariffgroup, db_column ="tariff", null=True, blank=True, verbose_name='PLAN')
-    id_didgroup = models.ForeignKey(Cardgroup, db_column ="id_didgroup", null=True,blank=True, verbose_name='GROUP')
+    id_didgroup = models.ForeignKey(Didgroup, db_column ="id_didgroup", null=True,blank=True)
+    id_group = models.ForeignKey(Cardgroup, db_column ="id_group", null=True, blank=True,verbose_name='GROUP')
+    id_timezone = models.ForeignKey(Timezone,db_column ="id_timezone",null=True, blank=True,verbose_name='Timezone')
+    language = models.CharField(choices=LANGUAGES,max_length=15, blank=True, verbose_name='LG')
+    currency = models.ForeignKey(Currencies,db_column ="currency",max_length=9,blank=True,verbose_name='Currency')
+    id_campaign = models.ForeignKey(Campaign,db_column ="id_campaign",null=True, blank=True,verbose_name='Campaign')
+
 
     def card_group_name(self):
         """
@@ -494,11 +587,12 @@ class Card(models.Model):
         else:
             return self.tariff.tariffgroupname
 
-    def BA(self):
+    def ba(self):
         return u"%.3f %s" % (self.credit, self.currency)
 
     class Meta:
         db_table = u'cc_card'
+        verbose_name_plural = "Customer"    
 
 
 
@@ -589,13 +683,6 @@ class CardPackageOffer(models.Model):
     class Meta:
         db_table = u'cc_card_package_offer'
 
-class CardSeria(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=90)
-    description = models.TextField(blank=True)
-    value = models.IntegerField()
-    class Meta:
-        db_table = u'cc_card_seria'
 
 class CcCardSubscription(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -666,23 +753,8 @@ class CcConfiguration(models.Model):
     class Meta:
         db_table = u'cc_configuration'
 
-class Country(models.Model):
-    id = models.IntegerField(primary_key=True)
-    countrycode = models.CharField(max_length=240)
-    countryprefix = models.CharField(max_length=240)
-    countryname = models.CharField(max_length=240)
-    class Meta:
-        db_table = u'cc_country'
 
-class Currencies(models.Model):
-    id = models.IntegerField(primary_key=True)
-    currency = models.CharField(unique=True, max_length=9)
-    name = models.CharField(max_length=90)
-    value = models.DecimalField(max_digits=13, decimal_places=5)
-    lastupdate = models.DateTimeField()
-    basecurrency = models.CharField(max_length=9)
-    class Meta:
-        db_table = u'cc_currencies'
+
 
 class CcDid(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -729,12 +801,7 @@ class CcDidUse(models.Model):
     class Meta:
         db_table = u'cc_did_use'
 
-class CcDidgroup(models.Model):
-    id = models.IntegerField(primary_key=True)
-    didgroupname = models.CharField(max_length=150)
-    creationdate = models.DateTimeField()
-    class Meta:
-        db_table = u'cc_didgroup'
+
 
 class CcEpaymentLog(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -1512,14 +1579,6 @@ class CcTicketComment(models.Model):
     viewed_admin = models.IntegerField()
     class Meta:
         db_table = u'cc_ticket_comment'
-
-class Timezone(models.Model):
-    id = models.IntegerField(primary_key=True)
-    gmtzone = models.CharField(max_length=765, blank=True)
-    gmttime = models.CharField(max_length=765, blank=True)
-    gmtoffset = models.IntegerField()
-    class Meta:
-        db_table = u'cc_timezone'
 
 class CcTrunk(models.Model):
     id_trunk = models.IntegerField(primary_key=True)

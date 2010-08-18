@@ -6,7 +6,19 @@ class AgentAdmin(admin.ModelAdmin):
     search_fields = ('id', 'login')
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'useralias','lastname','id_didgroup','BA','tariff','status','language')
+    fieldsets = (
+        (None, {
+            'fields': ('username', 'useralias','uipass','credit','id_group', 'serial','lastname','firstname',
+                       'email','address','city','state','country','zipcode','phone','fax','company_name',
+                       'company_website','typepaid','tariff','id_didgroup','id_timezone','currency','language',
+                       'status','simultaccess','runservice','creditlimit','credit_notification','notify_email',
+                       'email_notification','id_campaign','firstusedate','enableexpire','expirationdate',
+                       'expiredays','sip_buddy','iax_buddy','mac_addr','inuse','autorefill','initialbalance',
+                       'invoiceday','vat','vat_rn','discount','traffic','traffic_target','restriction')
+        }),
+    )
+    
+    list_display = ('id', 'username', 'useralias','lastname','id_group','ba','tariff','status','language')
     #fields = ('id', 'username', 'useralias','lastname','id_didgroup','status')
     search_fields = ('useralias', 'username')
     ordering = ('id',)
@@ -22,7 +34,7 @@ class CardAdmin(admin.ModelAdmin):
 #    search_fields = ('title', 'publisher')
 
 
-admin.site.register(Agent, AgentAdmin)
+#admin.site.register(Agent, AgentAdmin)
 admin.site.register(Card, CardAdmin)
 #admin.site.register(Book, BookAdmin)
 
