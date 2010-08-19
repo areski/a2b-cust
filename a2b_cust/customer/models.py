@@ -7,45 +7,9 @@
 # Also note: You'll have to insert the output of 'django-admin.py sqlcustom [appname]'
 # into your database.
 
-from django.db import models #, connection, transaction
+from django.db import models 
+from a2b_cust.customer.constants import *
 #from django.forms import ModelForm
-
-paid_type_list   = ((0,'PREPAID CARD'),
-                    (1,'POSTPAID CARD'))
-
-LANGUAGES = ( ('en', 'English'),
-              ('fr', 'French'),
-              ('es', 'Spanish'),
-              ('br', 'Brazilian'))
-
-card_status_list = ((0,"CANCELLED"),
-                    (1,"ACTIVATED"),
-                    (2,"NEW"),
-                    (3,"WAITING-MAILCONFIRMATION"),
-                    (4,"RESERVED"),
-                    (5,"EXPIRED"),
-                    (6,"SUSPENDED FOR UNDERPAYMENT"),
-                    (7,"SUSPENDED FOR LITIGATION"),
-                    (8,"WAITING-SUBSCRIPTION-PAYMENT"))
-                    
-simultaccess_list = ((1,"SIMULTANEOUS ACCESS"),
-                     (0,"INDIVIDUAL ACCESS"))
-
-generic_yes_no_list = ((0,'No'),(1,'Yes'))
-
-enableexpire_list = ((0,'NO EXPIRY'),
-                     (1,'EXPIRE DATE'),
-                     (2,'EXPIRE DAYS SINCE FIRST USE'),
-                     (3,'EXPIRE DAYS SINCE CREATION'))
-
-discount_list = []
-discount_list.append( ('0.00','NO DISCOUNT') )
-for n in range(1,100):
-   discount_list.append( (str(n)+".00",str(n)+"%"))
-    
-restriction_list = ((0,"NONE RESTRICTION USED"),
-                    (1,"CAN'T CALL RESTRICTED NUMBERS"),
-                    (2,"CAN ONLY CALL RESTRICTED NUMBERS"))
 
 
 class Country(models.Model):
@@ -473,8 +437,11 @@ class Currencies(models.Model):
     basecurrency = models.CharField(max_length=9)
 
     def __unicode__(self):
+        #if self.currency:
+        #    return self.currency
+        #else:
         return u"%s (%.3f)" % (self.name,self.value)
-
+    
     class Meta:
         db_table = u'cc_currencies'
         
@@ -500,15 +467,17 @@ class Timezone(models.Model):
 
     class Meta:
         db_table = u'cc_timezone'
+        
+
 
 class Card(models.Model):    
     id = models.IntegerField(primary_key=True, verbose_name='ID')
     creationdate = models.DateTimeField()
     firstusedate = models.DateTimeField(null=True, blank=True)
     expirationdate = models.DateTimeField()
-    enableexpire = models.IntegerField(null=True, blank=True,choices=enableexpire_list, verbose_name='Enable expire')
+    enableexpire = models.IntegerField(null=True, blank=True, choices=enableexpire_list, verbose_name='Enable expire')
     expiredays = models.IntegerField(null=True, blank=True)
-    username = models.CharField(max_length=150, verbose_name='ACCOUNT NUMBER')
+    username = models.CharField(max_length=150, verbose_name='ACCOUNT NUMBER',)
     useralias = models.CharField(unique=True, max_length=150, verbose_name='LOGIN')
     uipass = models.CharField(max_length=150)
     credit = models.DecimalField(max_digits=17, decimal_places=5, verbose_name='BA')
@@ -587,12 +556,18 @@ class Card(models.Model):
         else:
             return self.tariff.tariffgroupname
 
+    
+    
     def ba(self):
         return u"%.3f %s" % (self.credit, self.currency)
+    ba.short_description = 'B.A.'
+    
+    
 
     class Meta:
         db_table = u'cc_card'
         verbose_name_plural = "Customer"    
+
 
 
 

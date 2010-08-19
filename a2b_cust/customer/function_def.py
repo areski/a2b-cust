@@ -66,11 +66,8 @@ def month_year_range():
             sample_name_str = name + "-" + str_year
             m_list.append( (sample_str,sample_name_str) )
     return m_list
-"""
-def country_list():
-    list = Country.objects.all()
-    return ((l.countrycode, l.countryname) for l in list)
-"""
+
+
 def currency_list():
     list = Currencies.objects.all()
     return ( (l.currency,l.name+"  -  ("+str(l.value)+")") for l in list)
