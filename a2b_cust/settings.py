@@ -2,8 +2,8 @@
 import os
 APPLICATION_DIR = os.path.dirname( globals()[ '__file__' ] )
 
-DEBUG = False
-TEMPLATE_DEBUG = False
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -74,22 +74,27 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
+
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'pagination.middleware.PaginationMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-     "django.core.context_processors.auth",
-     "django.core.context_processors.debug",
-     "django.core.context_processors.i18n",
-     "django.core.context_processors.media",
-     "django.core.context_processors.request"
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
 ROOT_URLCONF = 'a2b_cust.urls'
 
 TEMPLATE_DIRS = (
@@ -108,24 +113,40 @@ DEBUG_TOOLBAR_CONFIG = {
 
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'a2b_cust.customer',
-    'pagination',
-    'paypal.standard.ipn',
-    'debug_toolbar',
+    'django.contrib.messages',
+    # Uncomment the next line to enable the admin:
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+    #'dilla',
+    #'debug_toolbar',
+    #'django_extensions',
+    'dateutil',
     'uni_form',
+    
+    'a2b_cust.customer',
+    #'paypal.standard.ipn',  
 )
 
 PAYPAL_RECEIVER_EMAIL = "yourpaypalemail@example.com"
+
+gettext = lambda s: s
+
+LANGUAGES = (
+    ('en', gettext('English')),
+    ('fr', gettext('French')),  
+    ('es', gettext('Spanish')),  
+    ('br', gettext('Brazilian')),
+)
 
 
 try :
     from settings_local import *
 except :
     pass
+
+
 
