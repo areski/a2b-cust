@@ -12,6 +12,23 @@ from a2b_cust.customer.constants import *
 #from django.forms import ModelForm
 
 
+# TODO : Provision this table
+# This Table describe the different language supported
+class Language(models.Model):
+    code = models.CharField(max_length=6, primary_key=True)
+    name = models.CharField(max_length=180, blank=True)
+    lname = models.CharField(max_length=150, blank=True)
+    charset = models.CharField(max_length=60, blank=True)
+    
+    class Meta:
+        db_table = u'cc_language'
+    
+    def __unicode__(self):
+        return '[%s] %s' %(self.code, self.name)
+    class Dilla:
+        skip_model = True
+
+
 class Country(models.Model):
     id = models.IntegerField(primary_key=True)
     countrycode = models.CharField(max_length=240)

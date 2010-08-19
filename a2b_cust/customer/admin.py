@@ -1,10 +1,20 @@
 from django.contrib import admin
 from a2b_cust.customer.models import * #Publisher, Author, Book
 
+
 class AgentAdmin(admin.ModelAdmin):
     list_display = ('id', 'datecreation', 'login','passwd','firstname','lastname','credit','commission','currency','active')
     search_fields = ('id', 'login')
 
+#admin.site.register(Agent, AgentAdmin)
+
+
+# Language
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ('code', 'name')
+    list_filter = ['code']
+
+admin.site.register(Language, LanguageAdmin)
 
 
 class CardAdmin(admin.ModelAdmin):
@@ -27,8 +37,9 @@ class CardAdmin(admin.ModelAdmin):
     search_fields = ('useralias', 'username')
     ordering = ('id',)
     
-
     readonly_fields = ('username','credit','firstusedate')
+
+admin.site.register(Card, CardAdmin)
 
 
 #class BookAdmin(admin.ModelAdmin):
@@ -41,8 +52,5 @@ class CardAdmin(admin.ModelAdmin):
 #    fields = ('title', 'authors', 'publisher', 'publication_date')
 #    search_fields = ('title', 'publisher')
 
-
-#admin.site.register(Agent, AgentAdmin)
-admin.site.register(Card, CardAdmin)
 #admin.site.register(Book, BookAdmin)
 
