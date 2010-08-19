@@ -437,9 +437,6 @@ class Currencies(models.Model):
     basecurrency = models.CharField(max_length=9)
 
     def __unicode__(self):
-        #if self.currency:
-        #    return self.currency
-        #else:
         return u"%s (%.3f)" % (self.name,self.value)
     
     class Meta:
@@ -559,7 +556,7 @@ class Card(models.Model):
     
     
     def ba(self):
-        return u"%.3f %s" % (self.credit, self.currency)
+        return  u"%.3f %s " % (self.credit,self.currency)
     ba.short_description = 'B.A.'
     
     

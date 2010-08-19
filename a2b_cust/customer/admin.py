@@ -22,9 +22,12 @@ class CardAdmin(admin.ModelAdmin):
     )
     
     list_display = ('id', 'username', 'useralias','lastname','id_group','ba','tariff','status','language')
+    list_display_links = ('username',)
     #fields = ('id', 'username', 'useralias','lastname','id_didgroup','status')
     search_fields = ('useralias', 'username')
     ordering = ('id',)
+    
+
     readonly_fields = ('username','credit','firstusedate')
 
 
