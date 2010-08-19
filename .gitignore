@@ -1,1 +1,6 @@
 *.pyc
+*dilla*
+*.db
+*nbproject*
+*devserver*
+*settings_local*
