@@ -1,0 +1,37 @@
+<html>
+
+	<head>
+		<title>
+			{% if update %}
+				Poll: {{ language.code }}
+			{% else %}
+				New Poll
+			{% endif %}
+		</title>
+	</head>
+	
+	<body>
+		
+		{% if update %}
+			<form method="PUT" action="../{{ language.code }}/">
+		{% else %}
+			<form method="POST" action="../">
+		{% endif %}
+		
+			{% if update %}
+				<h1>Poll: {{ language.code }}</h1>
+			{% else %}
+				<h1>New Poll</h1>			
+			{% endif %}
+			
+			<table>
+				{{ form.as_table }}
+			</table>
+			
+			<input type="submit" />
+		
+		</form>
+		
+	</body>
+	
+</html>

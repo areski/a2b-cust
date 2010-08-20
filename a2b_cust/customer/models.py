@@ -25,6 +25,18 @@ class Language(models.Model):
     
     def __unicode__(self):
         return '[%s] %s' %(self.code, self.name)
+
+    class Admin:
+        pass
+    
+    def get_language_list(self):
+        return list(self.language.order_by('code'))
+    def get_language_from(self, language_num):
+        try:
+            return self.get_language_list()[language_num]
+        except IndexError:
+            raise Language.DoesNotExist
+
     class Dilla:
         skip_model = True
 
