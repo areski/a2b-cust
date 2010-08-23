@@ -8,7 +8,7 @@
 		<h1>Language List</h1>
 		<ol>
 		{% for language in language_list %}
-            <li><a href="{{ choice.code }}/">{{ language.code }}</a> | {{ language.name }} | {{ language.charset }}</li>
+            <li><a href="{{ language.code }}/">{{ language.code }}</a> | {{ language.name }} | {{ language.charset }}</li>
 		{% endfor %}
 		</ol>
 	</body>

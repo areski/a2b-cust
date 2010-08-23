@@ -3,9 +3,9 @@
 	<head>
 		<title>
 			{% if update %}
-				Poll: {{ language.code }}
+				Language: {{ language.code }}
 			{% else %}
-				New Poll
+				New Language
 			{% endif %}
 		</title>
 	</head>
@@ -19,9 +19,9 @@
 		{% endif %}
 		
 			{% if update %}
-				<h1>Poll: {{ language.code }}</h1>
+				<h1>Language: {{ language.code }}</h1>
 			{% else %}
-				<h1>New Poll</h1>			
+				<h1>New Language</h1>			
 			{% endif %}
 			
 			<table>

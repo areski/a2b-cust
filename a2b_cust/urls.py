@@ -4,9 +4,10 @@ from django.conf import settings
 from django.conf.urls.defaults import *
 
 from django_restapi.model_resource import * #Collection
+from django_restapi.authentication import *
 from django_restapi.responder import * #XMLResponder
 from django_restapi.receiver import *
-
+from a2b_cust.customer.forms import *
 #site_media = os.path.join(os.path.dirname(__file__), 'site_media')
 
 # Uncomment the next two lines to enable the admin:
@@ -20,8 +21,20 @@ language_xml_resource = Collection(
     expose_fields = ('code', 'name','lname' ,'charset'),
     receiver = XMLReceiver(),
     #responder = XMLResponder(),
-    responder = XMLResponder(paginate_by = 10)
+    responder = XMLResponder(paginate_by = 1),
+    authentication = HttpBasicAuthentication()
 )
+"""
+class LanguageCollection(Language):
+    def read(self, request):        
+        filtered_set = Language.objects.all()
+        return self.responder.list(request, filtered_set)
+
+    def get_url(self):
+        return reverse(self, (), {'code':self.model.language.code})
+"""
+
+
 
 language_json_resource = Collection(
     queryset = Language.objects.all(),

@@ -9,7 +9,8 @@
 
 from django.db import models 
 from a2b_cust.customer.constants import *
-#from django.forms import ModelForm
+
+from django.forms import ModelForm
 
 
 # TODO : Provision this table
@@ -28,14 +29,6 @@ class Language(models.Model):
 
     class Admin:
         pass
-    
-    def get_language_list(self):
-        return list(self.language.order_by('code'))
-    def get_language_from(self, language_num):
-        try:
-            return self.get_language_list()[language_num]
-        except IndexError:
-            raise Language.DoesNotExist
 
     class Dilla:
         skip_model = True
