@@ -41,12 +41,3 @@ class SearchForm(forms.Form):
 class CheckoutPaymentForm(forms.Form):
     payment_method = forms.TypedChoiceField(coerce=bool,choices=(('paypal', 'PayPal'), ),widget=forms.RadioSelect)#('moneybookers', 'Moneybookers.com'), ('plugnpay', 'PlugnPay')
     purchase_amount = forms.ChoiceField(label=u'Total Amount:',choices=purchase_amount_list())
-    
-class LanguageForm(ModelForm):    
-    code = forms.CharField(label='Code',required=True)
-    name = forms.CharField(label='Name',required=True)
-    lname = forms.CharField(label='Lname',required=True)
-    charset = forms.CharField(label='Charset',required=True)
-    class Meta:
-        model = Language
-        fields = ['code', 'name', 'lname','charset']

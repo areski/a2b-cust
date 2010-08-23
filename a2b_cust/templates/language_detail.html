@@ -10,8 +10,9 @@
 		<p>Character Set : {{ language.charset }} </p>
 		
 		
-		<form action="." method="DELETE">
+		<form action="../" method="DELETE">
 			<input type="submit" value="Remove Language" />
+			<input type="hidden" value="{{ language.code }}"/>
 			<p><em>Needs a browser that supports DELETE or a Django
 			    middleware that transforms DELETE into POST.</em></p>
 		</form>

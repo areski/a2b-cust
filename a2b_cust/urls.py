@@ -15,26 +15,27 @@ from django.contrib import admin
 admin.autodiscover()
 
 
+def digest_authfunc(username, realm):
+    #Exemplary authfunc for HTTP Digest. In production situations,
+    #the combined hashes of realm, username and password are usually
+    #stored in an external file/db.
+    hashes = {
+        ('realm1', 'john') : '3014aff1d0d0f0038e23c1195301def3', # Password: johnspass
+        ('realm2', 'jim') : '5bae77fe607e161b831c8f8026a2ceb2'   # Password: jimspass
+    }
+    return hashes[(username, realm)]
+
+
 language_xml_resource = Collection(
     queryset = Language.objects.all(),    
     permitted_methods = ('GET', 'POST', 'PUT', 'DELETE'),
     expose_fields = ('code', 'name','lname' ,'charset'),
     receiver = XMLReceiver(),
     #responder = XMLResponder(),
-    responder = XMLResponder(paginate_by = 1),
-    authentication = HttpBasicAuthentication()
+    responder = XMLResponder(paginate_by = 2),
+    #authentication = HttpBasicAuthentication(),
+    authentication = HttpDigestAuthentication(digest_authfunc, 'realm1'),
 )
-"""
-class LanguageCollection(Language):
-    def read(self, request):        
-        filtered_set = Language.objects.all()
-        return self.responder.list(request, filtered_set)
-
-    def get_url(self):
-        return reverse(self, (), {'code':self.model.language.code})
-"""
-
-
 
 language_json_resource = Collection(
     queryset = Language.objects.all(),
@@ -46,12 +47,12 @@ language_json_resource = Collection(
 language_template_resource = Collection(
     queryset = Language.objects.all(),
     permitted_methods = ('GET', 'POST', 'PUT', 'DELETE'),
-    expose_fields = ('code', 'name','lname' ,'charset'),
+    expose_fields = ('code', 'name','lname' ,'charset'),    
     responder = TemplateResponder(
         template_dir = '/home/shrenik/djcode/a2b-cust/a2b_cust/templates',
         template_object_name = 'language',
-        paginate_by = 10
-    )
+        paginate_by = 10,        
+    ),
 )
 
 
