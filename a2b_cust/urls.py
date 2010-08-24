@@ -2,7 +2,7 @@ import os
 from a2b_cust.customer.views import *
 from django.conf import settings
 from django.conf.urls.defaults import *
-
+from a2b_cust.settings import *
 from django_restapi.model_resource import * #Collection
 from django_restapi.authentication import *
 from django_restapi.responder import * #XMLResponder
@@ -47,11 +47,11 @@ language_json_resource = Collection(
 language_template_resource = Collection(
     queryset = Language.objects.all(),
     permitted_methods = ('GET', 'POST', 'PUT', 'DELETE'),
-    expose_fields = ('code', 'name','lname' ,'charset'),    
+    expose_fields = ('code', 'name','lname' ,'charset'),
     responder = TemplateResponder(
-        template_dir = '/home/shrenik/djcode/a2b-cust/a2b_cust/templates',
+        template_dir = os.path.join( APPLICATION_DIR, 'templates' ),
         template_object_name = 'language',
-        paginate_by = 10,        
+        paginate_by = 10,
     ),
 )
 

@@ -6,11 +6,28 @@
 	
 	<body>
 		<h1>Language List</h1>
-		<ol>
+		<ol><a href="creator/">add</a></ol>
+        <ol>
+        <ul>
 		{% for language in language_list %}
-            <li><a href="{{ language.code }}/">{{ language.code }}</a> | {{ language.name }} | {{ language.charset }}</li>
+           <li><a href="{{ language.code }}/">{{ language.code }}</a> | {{ language.name }} | {{ language.charset }}</li>
 		{% endfor %}
-		</ol>
+		</ul>
+        </ol>
+        <p>
+            {% if has_previous %}
+            <a href="?page={{ previous }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page }} of {{ pages }}.
+            </span>
+
+            {% if has_next %}
+                <a href="?page={{ next }}">next</a>
+            {% endif %}
+
+        </p>
 	</body>
 	
 </html>
