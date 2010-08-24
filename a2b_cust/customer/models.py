@@ -9,7 +9,8 @@
 
 from django.db import models 
 from a2b_cust.customer.constants import *
-#from django.forms import ModelForm
+
+from django.forms import ModelForm
 
 
 # TODO : Provision this table
@@ -25,6 +26,10 @@ class Language(models.Model):
     
     def __unicode__(self):
         return '[%s] %s' %(self.code, self.name)
+
+    class Admin:
+        pass
+
     class Dilla:
         skip_model = True
 
