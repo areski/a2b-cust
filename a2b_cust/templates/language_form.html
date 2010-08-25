@@ -13,11 +13,11 @@
 	<body>
 		
 		{% if update %}
-			<form method="PUT" action="../{{ language.code }}/">
+			<form method="PUT" action="../{{ language.code }}/" >
 		{% else %}
-			<form method="POST" action="../">
+			<form method="POST" action="../" >
 		{% endif %}
-		
+            {% csrf_token %}
 			{% if update %}
 				<h1>Language: {{ language.code }}</h1>
 			{% else %}

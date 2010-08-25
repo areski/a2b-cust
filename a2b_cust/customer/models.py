@@ -9,8 +9,7 @@
 
 from django.db import models 
 from a2b_cust.customer.constants import *
-
-from django.forms import ModelForm
+#from django.forms import ModelForm
 
 
 # TODO : Provision this table
@@ -19,8 +18,7 @@ class Language(models.Model):
     code = models.CharField(max_length=6, primary_key=True)
     name = models.CharField(max_length=180, blank=True)
     lname = models.CharField(max_length=150, blank=True)
-    charset = models.CharField(max_length=60, blank=True)
-    
+    charset = models.CharField(max_length=60, blank=True)    
     class Meta:
         db_table = u'cc_language'
     
