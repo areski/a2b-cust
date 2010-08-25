@@ -1,5 +1,5 @@
 import os
-
+from a2b_cust.customer.views import *
 from django.conf import settings
 from django.conf.urls.defaults import *
 
@@ -49,7 +49,7 @@ language_template_resource = Collection(
     permitted_methods = ('GET', 'POST', 'PUT', 'DELETE'),
     expose_fields = ('code', 'name','lname' ,'charset'),    
     responder = TemplateResponder(
-        template_dir = os.path.join( APPLICATION_DIR, 'templates' ),
+        template_dir = os.path.join( settings.APPLICATION_DIR, 'templates' ),
         template_object_name = 'language',
         paginate_by = 10,        
     ),
