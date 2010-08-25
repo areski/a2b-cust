@@ -2,7 +2,7 @@
 import os
 APPLICATION_DIR = os.path.dirname( globals()[ '__file__' ] )
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -120,7 +120,8 @@ INSTALLED_APPS = (
     'dateutil',
     'uni_form',
     'a2b_cust.customer',
-    #'paypal.standard.ipn',  
+    #'paypal.standard.ipn', 
+    'a2b_cust.api', 
 )
 
 PAYPAL_RECEIVER_EMAIL = "yourpaypalemail@example.com"

@@ -76,6 +76,8 @@ urlpatterns = patterns('',
     url(r'^html/language/creator/$', language_template_resource.responder.create_form),
     url(r'^html/language/(?P<pk>\d+)/editor/$', language_template_resource.responder.update_form),
     url(r'^html/language/(.*?)/?$', language_template_resource),
+    
+    (r'^api/', include('a2b_cust.api.urls')),
 )
 
 urlpatterns += patterns('a2b_cust.customer.views',
@@ -91,5 +93,6 @@ urlpatterns += patterns('a2b_cust.customer.views',
     url (r'^examplegrid/$', grid_handler, name='grid_handler'),
     url (r'^examplegrid/cfg/$', grid_config, name='grid_config'),
 )
+
 
 

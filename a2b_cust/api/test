@@ -1,0 +1,7 @@
+
+
+READ :
+    curl -i -H "Accept: application/xml" -X GET http://127.0.0.1:8000/api/languag
+
+CREATE :
+    curl -i -H "Accept: application/json" -X POST -d "code=fr" http://127.0.0.1:8000/api/language
