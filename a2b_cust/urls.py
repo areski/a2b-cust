@@ -1,14 +1,16 @@
 import os
-from a2b_cust.customer.views import *
+
 from django.conf import settings
 from django.conf.urls.defaults import *
+from a2b_cust.customer.views import *
+from a2b_cust.customer.models import *
+from a2b_cust.customer.forms import *
 from a2b_cust.settings import *
 from django_restapi.model_resource import * #Collection
 from django_restapi.authentication import *
 from django_restapi.responder import * #XMLResponder
 from django_restapi.receiver import *
-from a2b_cust.customer.forms import *
-#site_media = os.path.join(os.path.dirname(__file__), 'site_media')
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin

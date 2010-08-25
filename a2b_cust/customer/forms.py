@@ -22,7 +22,8 @@ class CardForm(ModelForm):
     class Meta:
         model = Card
         fields = ['lastname', 'firstname', 'address','city','state','country','zipcode','id_timezone','phone','fax']
-        
+
+
 class SearchForm(forms.Form):
     fromday_chk = forms.BooleanField(label=u'FROM :',required=False,)
     from_day = forms.ChoiceField(label=u'',choices=day_range(),required=False,)
