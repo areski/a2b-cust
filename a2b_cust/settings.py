@@ -117,7 +117,6 @@ INSTALLED_APPS = (
     #'django_extensions',
     'dateutil',
     'uni_form',
-    
     'a2b_cust.customer',
     #'paypal.standard.ipn',  
 )
