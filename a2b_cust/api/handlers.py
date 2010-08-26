@@ -25,11 +25,10 @@ class LanguageHandler(BaseHandler):
                 language = base.get(code=code)
                 return language
             except :
+                print "koko"
                 rc.BAD_REQUEST
         else:
             return base.all()
-    #curl -X GET http://127.0.0.1:8000/api/language
-    #curl -X GET http://127.0.0.1:8000/api/language/xx/
 
     def create(self, request):
         attrs = self.flatten_dict(request.POST)
@@ -42,12 +41,10 @@ class LanguageHandler(BaseHandler):
                             charset=attrs['charset'] )
             language.save()
             return language
-    #curl -X  POST http://127.0.0.1:8000/api/language -d "code=xx&name=xxxxx&lname=xxxxx&charset=utf-8"
-
-
+    
+    
     #@throttle(5, 10*60) # allow 5 times in 10 minutes
     def update(self, request, code):
-        #post = Language.objects.get(code=code)
         try :
             language = Language.objects.get(code=code)
             language.name = request.PUT.get('name')
@@ -55,17 +52,15 @@ class LanguageHandler(BaseHandler):
             return language
         except :
             return rc.NOT_HERE
-    #curl -X PUT http://127.0.0.1:8000/api/language/xx/ -d "name=xxxxx"
+            
 
     def delete(self, request, code):
-        #post = Blogpost.objects.get(slug=post_slug)
         try :
             language = Language.objects.get(code=code)
             language.delete()
             return rc.DELETED # returns HTTP 204
         except :
-            return rc.NOT_HERE        
-    #curl -X DELETE http://127.0.0.1:8000/api/language/xx/
+            return rc.NOT_HERE
     
     
 class AnonymousLanguageHandler(LanguageHandler, AnonymousBaseHandler):

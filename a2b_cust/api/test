@@ -1,13 +1,19 @@
 
 
+Language API :
+----------------
+
 READ :
     curl -i -H "Accept: application/json" -X GET http://127.0.0.1:8000/api/language
+    curl -i -H "Accept: application/json" -X GET http://127.0.0.1:8000/api/language/xx/
 
 CREATE :
-    curl -i -H "Accept: application/json" -X POST -d "code=fr" http://127.0.0.1:8000/api/language
+    curl -i -H "Accept: application/json" -X POST http://127.0.0.1:8000/api/language -d "code=br&name=brazil&lname=brazil&charset=utf-8"
     
 UPDATE :
-    curl -X PUT http://127.0.0.1:8000/api/language/xx/ -d "name=xxxxx"
+    curl -i -H "Accept: application/json" -X PUT http://127.0.0.1:8000/api/language/br/ -d "name=Brazilian"
     
 DELETE :
-    curl -X DELETE http://127.0.0.1:8000/api/language/xx
+    curl -i -H "Accept: application/json" -X DELETE http://127.0.0.1:8000/api/language/br/
+    
+    
