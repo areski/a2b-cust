@@ -32,10 +32,8 @@
 	git clone git://github.com/johnboxall/django-paypal.git paypal
 
 
-* django-rest-interface
+* django-piston
 ---------------
-        download :
-        svn checkout http://django-rest-interface.googlecode.com/svn/trunk/ django-rest-interface
-
-        copy django_restapi folder to python direcotry (for example /usr/local/lib/python2.6/dist-packages/) 
+    install :
+    easy_install django-piston
 
