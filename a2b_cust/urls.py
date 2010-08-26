@@ -1,14 +1,16 @@
 import os
 from a2b_cust.customer.views import *
+from a2b_cust.customer.forms import *
+from a2b_cust.customer.models import Language
+
 from django.conf import settings
 from django.conf.urls.defaults import *
 
-from django_restapi.model_resource import * #Collection
+from django_restapi.model_resource import * 
 from django_restapi.authentication import *
-from django_restapi.responder import * #XMLResponder
+from django_restapi.responder import * 
 from django_restapi.receiver import *
-from a2b_cust.customer.forms import *
-from a2b_cust.customer.models import Language
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -54,7 +56,6 @@ language_template_resource = Collection(
         paginate_by = 10,        
     ),
 )
-
 
 
 urlpatterns = patterns('',

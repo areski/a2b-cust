@@ -4,11 +4,22 @@ from random import *
 import string
 import calendar
 
+
 def get_unique_id():
     """get unique id"""
     length=8
     chars="abcdefghijklmnopqrstuvwxyz1234567890"
     return ''.join([choice(chars) for i in range(length)])
+
+def pass_gen():
+    char_length=2
+    digit_length=6
+    chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    digit="1234567890"
+    pass_str_char = ''.join([choice(chars) for i in range(char_length)])
+    pass_str_digit = ''.join([choice(digit) for i in range(digit_length)])
+    return pass_str_char+pass_str_digit
+
 
 def purchase_amount_str():
     purchase_amount_str = config_value('purchase_amount').replace(":","-")
