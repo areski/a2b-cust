@@ -5,3 +5,9 @@ READ :
 
 CREATE :
     curl -i -H "Accept: application/json" -X POST -d "code=fr" http://127.0.0.1:8000/api/language
+    
+UPDATE :
+    curl -X PUT http://127.0.0.1:8000/api/language/xx/ -d "name=xxxxx"
+    
+DELETE :
+    curl -X DELETE http://127.0.0.1:8000/api/language/xx
