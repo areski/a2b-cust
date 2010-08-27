@@ -4,16 +4,16 @@ Language API :
 ----------------
 
 READ :
-    curl -i -H "Accept: application/json" -X GET http://127.0.0.1:8000/api/language
-    curl -i -H "Accept: application/json" -X GET http://127.0.0.1:8000/api/language/xx/
+    curl -u username:password -i -H "Accept: application/json" -X GET http://127.0.0.1:8000/api/language
+    curl -u username:password -i -H "Accept: application/json" -X GET http://127.0.0.1:8000/api/language/xx/
 
 CREATE :
-    curl -i -H "Accept: application/json" -X POST http://127.0.0.1:8000/api/language -d "code=br&name=brazil&lname=brazil&charset=utf-8"
+    curl -u username:password -i -H "Accept: application/json" -X POST http://127.0.0.1:8000/api/language -d "code=br&name=brazil&lname=brazil&charset=utf-8"
     
 UPDATE :
-    curl -i -H "Accept: application/json" -X PUT http://127.0.0.1:8000/api/language/br/ -d "name=Brazilian"
+    curl -u username:password -i -H "Accept: application/json" -X PUT http://127.0.0.1:8000/api/language/br/ -d "name=Brazilian"
     
 DELETE :
-    curl -i -H "Accept: application/json" -X DELETE http://127.0.0.1:8000/api/language/br/
+    curl -u username:password -i -H "Accept: application/json" -X DELETE http://127.0.0.1:8000/api/language/br/
     
     

@@ -1,8 +1,11 @@
 from django.conf.urls.defaults import *
 from piston.resource import Resource
 from a2b_cust.api.handlers import *
+from piston.authentication import HttpBasicAuthentication, HttpBasicSimple
 
-language_handler = Resource(LanguageHandler)
+auth = HttpBasicAuthentication(realm='Language Application')
+
+language_handler = Resource(LanguageHandler, authentication=auth)
 
 urlpatterns = patterns('',
    #url(r'^language/(?P<post_slug>[^/]+)/', language_handler),
