@@ -31,20 +31,15 @@ class Language(models.Model):
     class Dilla:
         skip_model = True
 
-
 class Country(models.Model):
     id = models.IntegerField(primary_key=True)
     countrycode = models.CharField(max_length=240)
     countryprefix = models.CharField(max_length=240)
     countryname = models.CharField(max_length=240)
-    
+
     class Meta:
         db_table = u'cc_country'
-
-def country_list():
-        list = Country.objects.all()
-        return ((l.countrycode, l.countryname) for l in list)
-    
+"""
 class AuthGroup(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(unique=True, max_length=240)
@@ -101,7 +96,7 @@ class AuthUserUserPermissions(models.Model):
     permission_id = models.IntegerField()
     class Meta:
         db_table = u'auth_user_user_permissions'
-
+"""
 
 class Agent(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -164,7 +159,7 @@ class AgentSignup(models.Model):
 
 class AgentTariffgroup(models.Model):
     id_agent = models.IntegerField(primary_key=True)
-    id_tariffgroup = models.IntegerField(primary_key=True)
+    id_tariffgroup = models.IntegerField()#primary_key=True
     class Meta:
         db_table = u'cc_agent_tariffgroup'
 
@@ -387,13 +382,13 @@ class CampaignConfig(models.Model):
 
 class CampaignPhonebook(models.Model):
     id_campaign = models.IntegerField(primary_key=True)
-    id_phonebook = models.IntegerField(primary_key=True)
+    id_phonebook = models.IntegerField()#primary_key=True
     class Meta:
         db_table = u'cc_campaign_phonebook'
 
 class CampaignPhonestatus(models.Model):
     id_phonenumber = models.IntegerField(primary_key=True)
-    id_campaign = models.IntegerField(primary_key=True)
+    id_campaign = models.IntegerField()#primary_key=True
     id_callback = models.CharField(max_length=120)
     status = models.IntegerField()
     lastuse = models.DateTimeField()
@@ -402,7 +397,7 @@ class CampaignPhonestatus(models.Model):
 
 class CcCampaignconfCardgroup(models.Model):
     id_campaign_config = models.IntegerField(primary_key=True)
-    id_card_group = models.IntegerField(primary_key=True)
+    id_card_group = models.IntegerField()#primary_key=True
     class Meta:
         db_table = u'cc_campaignconf_cardgroup'
 
@@ -505,7 +500,7 @@ class Card(models.Model):
     address = models.CharField(max_length=300)
     city = models.CharField(max_length=120)
     state = models.CharField(max_length=120)
-    country = models.CharField(max_length=120,choices=country_list())
+    country = models.CharField(max_length=120,)#choices=country_list()
     zipcode = models.CharField(max_length=60,null=True, blank=True,)
     phone = models.CharField(max_length=60)
     email = models.CharField(max_length=210)
@@ -693,7 +688,7 @@ class CcCardSubscription(models.Model):
 
 class CcCardgroupService(models.Model):
     id_card_group = models.IntegerField(primary_key=True)
-    id_service = models.IntegerField(primary_key=True)
+    id_service = models.IntegerField()#primary_key=True
     class Meta:
         db_table = u'cc_cardgroup_service'
 
@@ -920,7 +915,7 @@ class CcInvoiceItem(models.Model):
 
 class CcInvoicePayment(models.Model):
     id_invoice = models.IntegerField(primary_key=True)
-    id_payment = models.IntegerField(primary_key=True)
+    id_payment = models.IntegerField()#primary_key=True
     class Meta:
         db_table = u'cc_invoice_payment'
 
@@ -1017,7 +1012,7 @@ class CcNotification(models.Model):
 
 class CcNotificationAdmin(models.Model):
     id_notification = models.IntegerField(primary_key=True)
-    id_admin = models.IntegerField(primary_key=True)
+    id_admin = models.IntegerField()#primary_key=True
     viewed = models.IntegerField()
     class Meta:
         db_table = u'cc_notification_admin'
@@ -1058,13 +1053,13 @@ class PackageOffer(models.Model):
 
 class CcPackageRate(models.Model):
     package_id = models.IntegerField(primary_key=True)
-    rate_id = models.IntegerField(primary_key=True)
+    rate_id = models.IntegerField()#primary_key=True
     class Meta:
         db_table = u'cc_package_rate'
 
 class CcPackgroupPackage(models.Model):
     packagegroup_id = models.IntegerField(primary_key=True)
-    package_id = models.IntegerField(primary_key=True)
+    package_id = models.IntegerField()#primary_key=True
     class Meta:
         db_table = u'cc_packgroup_package'
 
@@ -1508,7 +1503,7 @@ class CcSystemLog(models.Model):
 
 class CcTariffgroupPlan(models.Model):
     idtariffgroup = models.IntegerField(primary_key=True)
-    idtariffplan = models.IntegerField(primary_key=True)
+    idtariffplan = models.IntegerField()#primary_key=True
     class Meta:
         db_table = u'cc_tariffgroup_plan'
 
@@ -1633,34 +1628,8 @@ class CcVoucher(models.Model):
     class Meta:
         db_table = u'cc_voucher'
 
-class Publisher(models.Model):
-    name = models.CharField(max_length=30)
-    address = models.CharField(max_length=50)
-    city = models.CharField(max_length=60)
-    state_province = models.CharField(max_length=30)
-    country = models.CharField(max_length=50)
-    website = models.URLField()
 
-    def __unicode__(self):
-        return self.name
-
-class Author(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=40)
-    email = models.EmailField(blank=True, verbose_name='e-mail')
-
-    def __unicode__(self):
-        return u'%s %s' % (self.first_name, self.last_name)
-
-class Book(models.Model):
-    title = models.CharField(max_length=100)
-    authors = models.ManyToManyField(Author)
-    publisher = models.ForeignKey(Publisher)
-    publication_date = models.DateField()
-
-    def __unicode__(self):
-        return self.title
-
+"""
 class DjangoAdminLog(models.Model):
     id = models.IntegerField(primary_key=True)
     action_time = models.DateTimeField()
@@ -1694,3 +1663,4 @@ class DjangoSite(models.Model):
     name = models.CharField(max_length=150)
     class Meta:
         db_table = u'django_site'
+"""

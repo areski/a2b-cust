@@ -4,6 +4,9 @@ from random import *
 import string
 import calendar
 
+def country_list():
+        list = Country.objects.all()
+        return ((l.countrycode, l.countryname) for l in list)
 
 def get_unique_id():
     """get unique id"""

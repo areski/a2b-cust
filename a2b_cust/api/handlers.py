@@ -1,4 +1,4 @@
-from piston.handler import BaseHandler, AnonymousBaseHandler
+from piston.handler import BaseHandler
 from piston.emitters import *
 from piston.utils import rc, require_mime, require_extended
 from a2b_cust.customer.models import Language
@@ -61,10 +61,4 @@ class LanguageHandler(BaseHandler):
             return rc.DELETED # returns HTTP 204
         except :
             return rc.NOT_HERE
-    
-    
-class AnonymousLanguageHandler(LanguageHandler, AnonymousBaseHandler):
-    """
-    Anonymous entrypoint for language.
-    """
-    fields = ('lname')
+
