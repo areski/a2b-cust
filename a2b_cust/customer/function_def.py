@@ -4,15 +4,19 @@ from random import *
 import string
 import calendar
 
+
+
 def country_list():
         list = Country.objects.all()
         return ((l.countrycode, l.countryname) for l in list)
+
 
 def get_unique_id():
     """get unique id"""
     length=8
     chars="abcdefghijklmnopqrstuvwxyz1234567890"
     return ''.join([choice(chars) for i in range(length)])
+
 
 def pass_gen():
     char_length=2
@@ -29,6 +33,7 @@ def purchase_amount_str():
     purchase_amount_str = purchase_amount_str + ' ' + config_value('base_currency').upper()
     return purchase_amount_str
 
+
 def config_value(key):
     val = Config.objects.get(config_key=key)
     return val.config_value
@@ -37,19 +42,23 @@ def call_type_list():
     CALL_TYPE_LIST= ( (-1,'ALL CALLS'),(0,'STANDARD'),(1,'SIP/IAX'),(2,'DIDCALL'),(3,'DID_VOIP'),(4,'CALLBACK'),(5,'PREDICT'), )
     return CALL_TYPE_LIST
 
+
 def dial_status_list():
     DIAL_STATUS_LIST= ( (1,'ANSWER'),(2,'BUSY'),(3,'NOANSWER'),(4,'CANCEL'),(5,'CONGESTION'),(6,'CHANUNAVAIL'),(7,'DONTCALL'),(8,'TORTURE'),(9,'INVALIDARGS'),)
     return DIAL_STATUS_LIST
+
 
 def day_range():
     DAYS = range(1,32)
     days = map(lambda x:(x,x),DAYS)
     return days
 
+
 def purchase_amount_list():
     purchase_amount_arr = config_value('purchase_amount').split(":")
     purchase_amount = map(lambda x:(x,x),purchase_amount_arr)
     return purchase_amount
+
 
 def validate_days(year,month,day):
     total_days = calendar.monthrange(year,month)
@@ -86,13 +95,16 @@ def currency_list():
     list = Currencies.objects.all()
     return ( (l.currency,l.name+"  -  ("+str(l.value)+")") for l in list)
 
+
 def currency_value(currency_name):
     cur_row = Currencies.objects.get(currency=currency_name)
     return cur_row
 
+
 def timezone_list():
     list = Timezone.objects.all()
     return ((l.id, l.gmtzone) for l in list)
+
 
 #variable check with request
 def variable_value(request,field_name):
@@ -110,6 +122,7 @@ def variable_value(request,field_name):
 
     return field_name
 
+
 #source_type/destination_type filed check with request
 def source_desti_field_chk(base_field,base_field_type,field_name):
     kwargs = {}
@@ -122,5 +135,18 @@ def source_desti_field_chk(base_field,base_field_type,field_name):
             kwargs[field_name + '__contains']   = base_field
         if base_field_type == '4':
             kwargs[field_name + '__endswith']   = base_field
-
     return kwargs
+
+
+#function create to test UnitTest    
+def my_func(a_list, idx):
+    """
+    >>> a = ['larry', 'curly', 'moe']
+    >>> my_func(a, 0)
+    'larry'
+    >>> my_func(a, 1)
+    'curly'
+    """
+    return a_list[idx]
+
+

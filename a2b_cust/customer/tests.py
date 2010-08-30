@@ -1,6 +1,7 @@
 import unittest
 from django.test import TestCase
 from a2b_cust.customer.models import Language
+from function_def import my_func
 
 
 class LanguageTestCase(unittest.TestCase):
@@ -11,15 +12,22 @@ class LanguageTestCase(unittest.TestCase):
         self.thai = Language.objects.create(code="Ti", name="Thani", lname="Thai", charset="UTF-8")
     """
     def test_models(self):
-        self.assertEqual(self.Language.all().count(), 3)
-        self.assertEquals(self.Language.code, "Du")
+        self.assertEqual(Language.objects.all().count(), 3)
+        
+        self.assertEquals(Language.code, "Du")
         language = Language.objects.get(code="Du")
 
         self.assertEquals(language.name, 'Dutch')
         self.language.name = 'dutch'
 
-        self.assertNotEquals(self.language.name, 'Dutch')
-        self.assertEquals(self.language.name, 'dutch')
-     """
+        self.assertNotEquals(language.name, 'Dutch')
+        self.assertEquals(language.name, 'dutch')
+    """
 
 
+
+class MyFuncTestCase(unittest.TestCase):
+    def testBasic(self):
+        a = ['larry', 'curly', 'moe']
+        self.assertEquals(my_func(a, 0), 'larry')
+        self.assertEquals(my_func(a, 1), 'curly')
