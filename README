@@ -1,7 +1,7 @@
 
 
- * A2Billing Customer Panel
---------------------------------
+ > A2Billing Customer Panel
+-----------------------------
 
  - build with Django
  - integrate Paypal IPN
@@ -9,3 +9,17 @@
  - ...	
 
 
+
+ > Command lines
+--------------------
+
+ * Running Test Server :
+    python manage.py runserver
+    
+ * Running Create Database and Sync :
+    python manage.py syncdb
+    
+
+ * Running Tests :   
+    python manage.py test customer
+ 
