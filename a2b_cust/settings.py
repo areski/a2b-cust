@@ -120,7 +120,7 @@ INSTALLED_APPS = (
     'uni_form',
     'a2b_cust.customer',
     #'paypal.standard.ipn', 
-    'a2b_cust.api', 
+    'a2b_cust.api',
 )
 
 PAYPAL_RECEIVER_EMAIL = "yourpaypalemail@example.com"
