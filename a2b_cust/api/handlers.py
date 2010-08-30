@@ -1,13 +1,13 @@
 from piston.handler import BaseHandler
 from piston.emitters import *
 from piston.utils import rc, require_mime, require_extended
+from piston.doc import generate_doc
 from a2b_cust.customer.models import Language
 
 
 class LanguageHandler(BaseHandler):
     model = Language
     allowed_methods = ('GET','POST','PUT', 'DELETE')
-    anonymous = 'AnonymousLanguageHandler'
     fields = ('code', 'name', 'lname', 'charset')
 
     @classmethod
@@ -56,9 +56,9 @@ class LanguageHandler(BaseHandler):
             return rc.DUPLICATE_ENTRY
         else:
             language = Language(code=attrs['code'],
-                            name=attrs['name'],
-                            lname=attrs['lname'],
-                            charset=attrs['charset'] )
+                                name=attrs['name'],
+                                lname=attrs['lname'],
+                                charset=attrs['charset'] )
             language.save()
             return language
     
@@ -128,4 +128,5 @@ for doc_elem in doc_list:
 
         sig = sig.rstrip(",")
         #print "url attribute:" + sig # -> 'read(repo_slug=None)'
+
 """
