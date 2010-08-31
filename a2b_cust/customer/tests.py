@@ -1,13 +1,12 @@
 import urllib, base64
 from django.contrib.auth.models import User
-from django.test import *
-from a2b_cust.customer.models import Language
+from django.test import TestCase
+from a2b_cust.customer.models import *
 from function_def import my_func
 
 
 class LanguageTestCase(TestCase):
     def setUp(self):
-        self.client = Client()
         self.user = User.objects.create_user('admin', 'admin@world.com', 'admin')
         self.user.is_staff = True
         self.user.is_superuser = True
@@ -43,9 +42,11 @@ class LanguageTestCase(TestCase):
     """
 
 
-
-class MyFuncTestCase(unittest.TestCase):
+"""
+class MyFuncTestCase(TestCase):
     def testBasic(self):
         a = ['larry', 'curly', 'moe']
         self.assertEquals(my_func(a, 0), 'larry')
         self.assertEquals(my_func(a, 1), 'curly')
+        
+"""

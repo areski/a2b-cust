@@ -33,7 +33,6 @@ def purchase_amount_str():
     purchase_amount_str = purchase_amount_str + ' ' + config_value('base_currency').upper()
     return purchase_amount_str
 
-
 def config_value(key):
     val = Config.objects.get(config_key=key)
     return val.config_value
