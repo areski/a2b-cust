@@ -1,28 +1,29 @@
 import urllib, base64
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, Client
 from a2b_cust.customer.models import *
 from function_def import my_func
 
 
 class LanguageTestCase(TestCase):
     def setUp(self):
+        self.client = Client()
         self.user = User.objects.create_user('admin', 'admin@world.com', 'admin')
         self.user.is_staff = True
         self.user.is_superuser = True
         self.user.is_active = True
         self.user.save()
-        self.auth_string = 'Basic %s' % base64.encodestring('admin:admin').rstrip()
-
+        auth = '%s:%s' % ('admin', 'admin')
+        auth = 'Basic %s' % base64.encodestring(auth)
+        auth = auth.strip()
+        self.extra = {
+            'HTTP_AUTHORIZATION': auth,
+        }
         self.dutch = Language.objects.create(code="Du", name="Dutch", lname="Dutch", charset="UTF-8")
 
     def test_get(self):
-        response = self.client.get('/api/language/')
-        self.assertEquals(response.status_code, 401)
-
-        auth_string = 'Basic %s' % base64.encodestring('%s:%s' % ('admin', 'admin')).rstrip()
-        response = self.client.get('/api/language/', HTTP_AUTHORIZATION=auth_string)
-        self.assertEquals(response.status_code, 200, 'Failed with combo of %s:%s' % ('admin', 'admin'))
+        response = self.client.get('/api/language', {}, **self.extra)
+        self.assertEqual(response.status_code, 200)
     
     """
     def test_post(self):
