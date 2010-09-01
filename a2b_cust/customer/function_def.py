@@ -27,12 +27,6 @@ def pass_gen():
     pass_str_digit = ''.join([choice(digit) for i in range(digit_length)])
     return pass_str_char+pass_str_digit
 
-
-def purchase_amount_str():
-    purchase_amount_str = config_value('purchase_amount').replace(":","-")
-    purchase_amount_str = purchase_amount_str + ' ' + config_value('base_currency').upper()
-    return purchase_amount_str
-
 def config_value(key):
     val = Config.objects.get(config_key=key)
     return val.config_value
@@ -58,6 +52,10 @@ def purchase_amount_list():
     purchase_amount = map(lambda x:(x,x),purchase_amount_arr)
     return purchase_amount
 
+def purchase_amount_str():
+    purchase_amount_str = config_value('purchase_amount').replace(":","-")
+    purchase_amount_str = purchase_amount_str + ' ' + config_value('base_currency').upper()
+    return purchase_amount_str
 
 def validate_days(year,month,day):
     total_days = calendar.monthrange(year,month)
@@ -135,17 +133,3 @@ def source_desti_field_chk(base_field,base_field_type,field_name):
         if base_field_type == '4':
             kwargs[field_name + '__endswith']   = base_field
     return kwargs
-
-
-#function create to test UnitTest    
-def my_func(a_list, idx):
-    """
-    >>> a = ['larry', 'curly', 'moe']
-    >>> my_func(a, 0)
-    'larry'
-    >>> my_func(a, 1)
-    'curly'
-    """
-    return a_list[idx]
-
-

@@ -21,9 +21,9 @@ urlpatterns = patterns('',
     (r'^checkout_ipn_process/', include('paypal.standard.ipn.urls')),
 
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    (r'^admin/(.*)', admin.site.root),
     
+    (r'^admin/(.*)', admin.site.root),
+
     (r'^api/', include('a2b_cust.api.urls')),
 )
 

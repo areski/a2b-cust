@@ -2,7 +2,7 @@
 import os
 APPLICATION_DIR = os.path.dirname( globals()[ '__file__' ] )
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
