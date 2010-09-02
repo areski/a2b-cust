@@ -1,21 +1,34 @@
 from django.contrib import admin
-from a2b_cust.customer.models import * #Publisher, Author, Book
-
-
-class AgentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'datecreation', 'login','passwd','firstname','lastname','credit','commission','currency','active')
-    search_fields = ('id', 'login')
-
-#admin.site.register(Agent, AgentAdmin)
-
+from a2b_cust.customer.models import *
+from django.contrib.sites.models import Site
+#from django.contrib.admin.views.main import ChangeList
 
 # Language
 class LanguageAdmin(admin.ModelAdmin):
-    list_display = ('code', 'name')
-    list_filter = ['code']
+    list_display = ('name','lname','charset')
+    list_display_links = ('name',)
+    #list_editable = ('code','charset')
+    list_filter = ['charset']
+    """
+    def changelist_view(self, request, extra_context=None, **kwargs):
+        cl = ChangeList(request, self.model, list(self.list_display),
+                        self.list_display_links, self.list_filter,
+                        self.date_hierarchy, self.search_fields,
+                        self.list_select_related, self.list_per_page,
+                        self.list_editable, self)
+        cl.formset = None
+        if extra_context is None:
+            extra_context = {}
+        if kwargs.get('only_tagged'):
+            tag = kwargs.get('tag')
+            cl.result_list = cl.result_list.filter(tags__icontains=tag)
+            extra_context['extra_filter'] = "Only tagged %s" % tag
 
+        extra_context['cl'] = cl
+        return super(LanguageAdmin, self).changelist_view(request, extra_context=extra_context)
+      """
 admin.site.register(Language, LanguageAdmin)
-
+admin.site.unregister(Site)
 
 class CardAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -32,25 +45,11 @@ class CardAdmin(admin.ModelAdmin):
     )
     
     list_display = ('id', 'username', 'useralias','lastname','id_group','ba','tariff','status','language')
-    list_display_links = ('username',)
-    #fields = ('id', 'username', 'useralias','lastname','id_didgroup','status')
+    list_display_links = ('username',)    
     search_fields = ('useralias', 'username')
     ordering = ('id',)
-    
+    list_filter = ['status','id_group','language']
     readonly_fields = ('username','credit','firstusedate')
 
 admin.site.register(Card, CardAdmin)
-
-
-#class BookAdmin(admin.ModelAdmin):
-#    list_display = ('title', 'publisher', 'publication_date')
-#    list_filter = ('publication_date',)
-#    date_hierarchy = 'publication_date'
-#    ordering = ('-publication_date',)
-#    filter_horizontal = ('authors',)
-#    raw_id_fields = ('publisher',)
-#    fields = ('title', 'authors', 'publisher', 'publication_date')
-#    search_fields = ('title', 'publisher')
-
-#admin.site.register(Book, BookAdmin)
 

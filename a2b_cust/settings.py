@@ -83,9 +83,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfResponseMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'pagination.middleware.PaginationMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.request",
+)
 
 ROOT_URLCONF = 'a2b_cust.urls'
 
@@ -116,6 +124,7 @@ INSTALLED_APPS = (
     #'dilla',
     #'debug_toolbar',
     #'django_extensions',
+    'pagination',
     'dateutil',
     'uni_form',
     'a2b_cust.customer',

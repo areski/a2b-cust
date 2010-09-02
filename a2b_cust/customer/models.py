@@ -25,6 +25,9 @@ class Language(models.Model):
     def __unicode__(self):
         return '[%s] %s' %(self.code, self.name)
 
+    def get_list(self):
+        return [(self.code, self.name, self.lname, self.charset)]
+
     class Admin:
         pass
 
