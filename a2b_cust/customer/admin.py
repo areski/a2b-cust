@@ -53,3 +53,18 @@ class CardAdmin(admin.ModelAdmin):
 
 admin.site.register(Card, CardAdmin)
 
+class CallAdmin(admin.ModelAdmin):
+    list_display = ('starttime','card_id', 'src', 'calledstation',  'sessiontime', 'real_sessiontime','terminatecauseid')
+    list_display_links = []
+    list_filter = ['starttime', 'calledstation']
+    search_fields = ('card_id', 'dst', 'src','starttime',)
+    ordering = ('-id',)
+    
+    def __init__(self, *args, **kwargs):
+        super(CallAdmin, self).__init__(*args, **kwargs)
+        self.list_display_links = []
+
+    
+
+
+admin.site.register(Call, CallAdmin)

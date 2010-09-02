@@ -244,7 +244,7 @@ class Call(models.Model):
     id_card_package_offer = models.IntegerField(null=True, blank=True)
     real_sessiontime = models.IntegerField(null=True, blank=True)
     dnid = models.CharField(max_length=120)
-    terminatecauseid = models.IntegerField(null=True, blank=True)
+    terminatecauseid = models.IntegerField(null=True, blank=True,choices=call_type_list, verbose_name='CALL TYPE')
     #destination = models.IntegerField(null=True, blank=True,db_column ="destination")
     destination = models.ForeignKey(Prefix, db_column ="destination", null=True, blank=True)
 

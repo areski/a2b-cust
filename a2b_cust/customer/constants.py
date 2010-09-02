@@ -36,3 +36,10 @@ restriction_list = ((0,"NONE RESTRICTION USED"),
                     (1,"CAN'T CALL RESTRICTED NUMBERS"),
                     (2,"CAN ONLY CALL RESTRICTED NUMBERS"))
 
+call_type_list = ( (-1,'ALL CALLS'),
+                   (0,'STANDARD'),
+                   (1,'SIP/IAX'),
+                   (2,'DIDCALL'),
+                   (3,'DID_VOIP'),
+                   (4,'CALLBACK'),
+                   (5,'PREDICT'), )
