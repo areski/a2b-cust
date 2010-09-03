@@ -1,0 +1,51 @@
+{% extends 'admin/base_site.html' %}
+{% load pagination_tags %}
+{% block title %}List of Customer{% endblock %}
+{% load i18n adminmedia %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="/admin/">
+{% trans "Home" %}</a> >Customer</div>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1>List of Customers:</h1>
+  <div class="module">
+        <table >
+        <tr>
+            <th scope="row">ID</th>
+            <th scope="row">A/C NUMBER</th>
+            <th scope="row">USERNAME</th>
+            <th scope="row">LASTNAME</th>
+            <th scope="row">GROUP</th>
+            <th scope="row">B.A.</th>
+            <th scope="row">PLAN</th>
+            <th scope="row">STATUS</th>
+            <th scope="row">LANGUAGE</th>
+        </tr>
+        <caption><a href="{{ app.app_url }}" class="section"></a></caption>
+
+        {% if card_list %}
+        {% autopaginate card_list 5 %}
+
+        {% for card in card_list %}
+        <tr>
+        <td>{{ card.id }}</td>
+        <td>{{ card.username }}</td>
+        <td>{{ card.useralias }}</td>
+        <td>{{ card.lastname }}</td>
+        <td>{{ card.id_group }}</td>
+        <td>{{ card.credit }}</td>
+        <td>{{ card.tariff }}</td>
+        <td>{{ card.status }}</td>
+        <td>{{ card.language }}</td>
+        </tr>
+        {% endfor %}
+
+        <tr><th scope="col" colspan=9>  {% paginate %}  </th></tr>
+        {% else %}
+        <tr><td scope="row" colspan=9 align=center>No Record(s) found.</td></tr>
+        {% endif %}
+
+       </table>
+
+    </div>
+{% endblock %}

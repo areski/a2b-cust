@@ -1,0 +1,28 @@
+{% extends 'admin/base_site.html' %}
+{% block title %}List of Languages{% endblock %}
+
+{% load i18n adminmedia %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="/admin/">
+{% trans "Home" %}</a> > My Language</div>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1>List of Languages:</h1>
+  <div class="module">
+        <table >
+        <tr>
+            <th scope="row">Name</th>
+            <th scope="row">Code</th>
+            <th scope="row">Charset</th>
+        </tr>
+        <caption><a href="{{ app.app_url }}" class="section"></a></caption>
+        {% for language in language_list %}
+        <tr>
+        <td>{{ language.name }}</td>
+        <td>{{ language.code }}</td>
+        <td>{{ language.charset }}</td>
+        </tr>
+       {% endfor %}
+       </table>
+    </div>
+{% endblock %}

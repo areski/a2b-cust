@@ -1,0 +1,53 @@
+{% extends 'admin/base_site.html' %}
+{% load pagination_tags %}
+{% block title %}Call Detail Record(s){% endblock %}
+{% load i18n adminmedia %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="/admin/">
+{% trans "Home" %}</a> >Call Detail Record(s)</div>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1>Call Detail Record(s):</h1>
+  <div class="module">
+        <table >
+        <tr>
+            <th scope="row">DATE</th>
+            <th scope="row">CALLER ID</th>            
+            <th scope="row">PHONE NO</th>
+            <th scope="row">DESTINATION</th>
+            <th scope="row">DURATION</th>
+            <th scope="col">TC</th>            
+            <th scope="row">COST</th>            
+        </tr>
+        <caption><a href="{{ app.app_url }}" class="section"></a></caption>
+
+        {% if call_list %}
+        {% autopaginate call_list 10 %}
+
+        {% for call in call_list %}
+        <tr>
+        <td>{{ call.starttime }}</td>
+        <td>{{ call.src }}</td>
+        <td>{{ call.calledstation }}</td>
+        <td>
+            {% ifnotequal call.destination 0 %}
+            {{ call.destination.destination }}
+            {% else %}
+            &nbsp;
+            {% endifnotequal %}
+        </td>
+        <td>{{ call.real_sessiontime }}</td>
+        <td>{{ call.terminatecauseid }}</td>
+        <td>{{ call.sessionbill }}</td>
+        </tr>
+        {% endfor %}
+
+        <tr><th scope="col" colspan=9>  {% paginate %}  </th></tr>
+        {% else %}
+        <tr><td scope="row" colspan=9 align=center>No Record(s) found.</td></tr>
+        {% endif %}
+
+       </table>
+
+    </div>
+{% endblock %}

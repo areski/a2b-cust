@@ -48,6 +48,21 @@
 
 {% block sidebar %}
 <div id="content-related">
+    <div class="module">
+      <h2>Admin tools</h2>
+        <ul class="actionlist">
+          <li class="changelink">
+            <a href="/admin/language/">Language</a>
+          </li>
+          <li class="changelink">
+            <a href="/admin/card/">Customer</a>
+          </li>
+          <li class="changelink">
+            <a href="/admin/cdr/">CDR Report</a>
+          </li>
+        </ul>
+    </div>
+
     <div class="module" id="recent-actions-module">
         <h2>{% trans 'Recent Actions' %}</h2>
         <h3>{% trans 'My Actions' %}</h3>
